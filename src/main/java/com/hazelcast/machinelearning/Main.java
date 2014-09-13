@@ -23,7 +23,7 @@ public class Main {
             throws Exception {
 
         // Prepare Hazelcast cluster
-        HazelcastInstance hazelcastInstance = buildCluster(2);
+        HazelcastInstance hazelcastInstance = buildCluster(1);
 
         // Read CSV data
         //ReaderHelper.read(hazelcastInstance);
@@ -44,7 +44,7 @@ public class Main {
 
             RecommendationMethod recommendationMethod = new RecommendationMethod(hazelcastInstance);
             List<ClassifiedFeatureDatum> trainingdata = new ArrayList<ClassifiedFeatureDatum>();
-            trainingdata.add(new ClassifiedFeatureDatum("EventA", new Classification("ResultB")));
+            trainingdata.add(new ClassifiedFeatureDatum("EventA", new Classification("ResultB",1.0)));
             trainingdata.add(new ClassifiedFeatureDatum("EventA", new Classification("ResultC")));
             trainingdata.add(new ClassifiedFeatureDatum("EventB", new Classification("ResultA")));
             trainingdata.add(new ClassifiedFeatureDatum("EventB", new Classification("ResultC")));
@@ -54,6 +54,7 @@ public class Main {
             recommendationMethod.train(trainingdata);
             List<FeatureConfidenceTuple> predictdata = new ArrayList<FeatureConfidenceTuple>();
             predictdata.add(new FeatureConfidenceTuple("EventA",1.0));
+            predictdata.add(new FeatureConfidenceTuple("EventB",1.5));
 
             Collection<Classification> classifications = recommendationMethod.predict(predictdata);
             System.out.println("Result: " + ToStringPrettyfier.toString(classifications));

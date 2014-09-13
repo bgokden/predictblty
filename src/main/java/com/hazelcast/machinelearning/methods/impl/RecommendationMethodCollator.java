@@ -11,10 +11,15 @@ public class RecommendationMethodCollator implements Collator<Map.Entry<Comparab
     @Override
     public List<Classification> collate(Iterable<Map.Entry<Comparable, Double>> values) {
         List<Classification> result = new ArrayList<>();
+        double sum = 0;
         for (Map.Entry<Comparable, Double> value : values) {
+            sum += value.getValue();
             result.add(new Classification(value.getKey(), value.getValue()));
         }
         Collections.sort(result, new ClassificationComparator());
+        for (int i = 0; i < result.size(); i++) {
+            result.get(i).setConfidenceCoefficient(result.get(i).getConfidenceCoefficient() / sum);
+        }
         return result;
     }
 
