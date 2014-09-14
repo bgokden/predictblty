@@ -33,10 +33,29 @@ public class RecommendationMethod implements MLMethod {
         this.hazelcastInstance = hazelcastInstance;
     }
 
+    //I am not ok with this method
+    private void addToMultiMapWithCheckIfExists(ClassifiedFeatureDatum classifiedFeatureDatum) {
+        Comparable feature =  classifiedFeatureDatum.getFeature();
+        boolean foundAndSet = false;
+        Collection<FeatureConfidenceTuple>  featureConfidenceTuples = this.multiMap.get(feature);
+        for (FeatureConfidenceTuple featureConfidenceTuple : featureConfidenceTuples) {
+            if (featureConfidenceTuple.getFeature().equals(classifiedFeatureDatum.getClassification().getComparableClassification()) ) {
+                double confidenceCoefficient = classifiedFeatureDatum.getClassification().getConfidenceCoefficient() + featureConfidenceTuple.getConfidenceCoefficent();
+                this.multiMap.remove(feature, featureConfidenceTuple);
+                foundAndSet = this.multiMap.put(feature, new FeatureConfidenceTuple(classifiedFeatureDatum.getClassification().getComparableClassification(), confidenceCoefficient));
+                break;
+            }
+        }
+        if (!foundAndSet) {
+            this.multiMap.put(classifiedFeatureDatum.getFeature(), new FeatureConfidenceTuple(classifiedFeatureDatum.getClassification().getComparableClassification(), classifiedFeatureDatum.getClassification().getConfidenceCoefficient()));
+        }
+    }
+
     @Override
     public void train(Collection<ClassifiedFeatureDatum> data) throws Exception {
         for (ClassifiedFeatureDatum classifiedFeatureDatum : data) {
-            this.multiMap.put(classifiedFeatureDatum.getFeature(), new FeatureConfidenceTuple(classifiedFeatureDatum.getClassification().getComparableClassification(), classifiedFeatureDatum.getClassification().getConfidenceCoefficient()));
+            this.addToMultiMapWithCheckIfExists(classifiedFeatureDatum);
+            //this.multiMap.put(classifiedFeatureDatum.getFeature(), new FeatureConfidenceTuple(classifiedFeatureDatum.getClassification().getComparableClassification(), classifiedFeatureDatum.getClassification().getConfidenceCoefficient()));
         }
     }
 

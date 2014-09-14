@@ -45,6 +45,7 @@ public class Main {
             RecommendationMethod recommendationMethod = new RecommendationMethod(hazelcastInstance);
             List<ClassifiedFeatureDatum> trainingdata = new ArrayList<ClassifiedFeatureDatum>();
             trainingdata.add(new ClassifiedFeatureDatum("EventA", new Classification("ResultB",1.0)));
+            trainingdata.add(new ClassifiedFeatureDatum("EventA", new Classification("ResultB",1.0)));
             trainingdata.add(new ClassifiedFeatureDatum("EventA", new Classification("ResultC")));
             trainingdata.add(new ClassifiedFeatureDatum("EventB", new Classification("ResultA")));
             trainingdata.add(new ClassifiedFeatureDatum("EventB", new Classification("ResultC")));
