@@ -37,6 +37,7 @@ public class RecommendationMethod implements MLMethod {
     private void addToMultiMapWithCheckIfExists(ClassifiedFeatureDatum classifiedFeatureDatum) {
         Comparable feature =  classifiedFeatureDatum.getFeature();
         boolean foundAndSet = false;
+        this.multiMap.lock(feature);
         Collection<FeatureConfidenceTuple>  featureConfidenceTuples = this.multiMap.get(feature);
         for (FeatureConfidenceTuple featureConfidenceTuple : featureConfidenceTuples) {
             if (featureConfidenceTuple.getFeature().equals(classifiedFeatureDatum.getClassification().getComparableClassification()) ) {
@@ -49,6 +50,7 @@ public class RecommendationMethod implements MLMethod {
         if (!foundAndSet) {
             this.multiMap.put(classifiedFeatureDatum.getFeature(), new FeatureConfidenceTuple(classifiedFeatureDatum.getClassification().getComparableClassification(), classifiedFeatureDatum.getClassification().getConfidenceCoefficient()));
         }
+        this.multiMap.unlock(feature);
     }
 
     @Override
