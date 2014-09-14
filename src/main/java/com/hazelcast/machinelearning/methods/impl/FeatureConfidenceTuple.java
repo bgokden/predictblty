@@ -47,4 +47,26 @@ public class FeatureConfidenceTuple implements DataSerializable {
         this.feature = objectDataInput.readObject();
         this.confidenceCoefficent = objectDataInput.readDouble();
     }
+
+    @Override
+    public int hashCode() {
+        System.out.println("hashCode run");
+        return this.feature.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        System.out.println("Equals run");
+        if (other == null) {
+            return false;
+        }
+        if (!getClass().equals(other.getClass())) {
+            return false;
+        }
+        if (this.feature != null && this.feature.equals(((FeatureConfidenceTuple) other).getFeature())) {
+            return true;
+        }
+        return false;
+    }
+
 }
