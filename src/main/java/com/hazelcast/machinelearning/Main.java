@@ -46,21 +46,36 @@ public class Main {
                     plantsTrainData.add(irisPlants.get(i));
                 }
             }
-            for (Integer integer : predictDataIndex) {
-                ClassifiedFeatureDatum classifiedFeatureDatum = irisPlants.get(integer.intValue());
-                System.out.println("Class to predict: "+classifiedFeatureDatum.getClassification().toString());
-                FeatureConfidenceTuple featureConfidenceTuple = new FeatureConfidenceTuple(classifiedFeatureDatum.getFeature(), 1.0);
-                plantsPredictData.add(featureConfidenceTuple);
-                break; //testing one value
-            }
-
-
             DistanceBasedClassificationMethod method = new DistanceBasedClassificationMethod(hazelcastInstance, null);
             method.train(plantsTrainData);
 
-            Collection<Classification> classifications = method.predict(plantsPredictData);
+            int success = 0;
 
-            System.out.println("Result: " + ToStringPrettyfier.toString(classifications));
+            for (Integer integer : predictDataIndex) {
+                ClassifiedFeatureDatum classifiedFeatureDatum = irisPlants.get(integer.intValue());
+                //System.out.println("Class to predict: " + classifiedFeatureDatum.getClassification().toString());
+                FeatureConfidenceTuple featureConfidenceTuple = new FeatureConfidenceTuple(classifiedFeatureDatum.getFeature(), 1.0);
+                plantsPredictData.clear();
+                plantsPredictData.add(featureConfidenceTuple);
+                Collection<Classification> classifications = method.predict(plantsPredictData);
+                //System.out.println("Result: " + ToStringPrettyfier.toString(classifications));
+                boolean check = compareClassifications(classifiedFeatureDatum.getClassification(),classifications);
+                System.out.println("Result: " + check);
+                if (check == false) {
+                    System.out.println("Class to predict: " + classifiedFeatureDatum.getClassification().toString());
+                    System.out.println("Result: " + ToStringPrettyfier.toString(classifications));
+                } else {
+                    success++;
+                }
+
+                //break; //testing one value
+            }
+            double successRate = ((double) success) / predictDataIndex.size();
+            System.out.println("Success Rate: " + successRate);
+
+
+
+
 
             //SparseMatrixMultiplication method = new SparseMatrixMultiplication();
             //method.execute(hazelcastInstance);
@@ -106,5 +121,15 @@ public class Main {
             hazelcastInstances[i] = Hazelcast.newHazelcastInstance(config);
         }
         return hazelcastInstances[0];
+    }
+
+    private static boolean compareClassifications(Classification classification, Collection<Classification> classifications) {
+        for (Classification classification1 : classifications) {
+            if (classification1.getComparableClassification().equals(classification.getComparableClassification())) {
+                return true;
+            }
+            break;
+        }
+        return false;
     }
 }
