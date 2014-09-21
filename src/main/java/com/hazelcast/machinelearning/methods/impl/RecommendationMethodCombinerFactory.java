@@ -7,10 +7,10 @@ import com.hazelcast.mapreduce.CombinerFactory;
  * Created by berkgokden on 9/13/14.
  */
 public class RecommendationMethodCombinerFactory
-        implements CombinerFactory<Comparable, Double, Double> {
+        implements CombinerFactory<Feature, Double, Double> {
 
     @Override
-    public Combiner<Double, Double> newCombiner(Comparable key) {
+    public Combiner<Double, Double> newCombiner(Feature key) {
         return new InvertedCombiner();
     }
 

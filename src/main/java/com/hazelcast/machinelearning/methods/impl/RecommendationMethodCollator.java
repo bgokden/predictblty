@@ -7,14 +7,14 @@ import java.util.*;
 /**
  * Created by berkgokden on 9/13/14.
  */
-public class RecommendationMethodCollator implements Collator<Map.Entry<Comparable, Double>, List<Classification>> {
+public class RecommendationMethodCollator implements Collator<Map.Entry<Feature, Double>, List<Classification>> {
     @Override
-    public List<Classification> collate(Iterable<Map.Entry<Comparable, Double>> values) {
+    public List<Classification> collate(Iterable<Map.Entry<Feature, Double>> values) {
         List<Classification> result = new ArrayList<>();
         double sum = 0;
-        for (Map.Entry<Comparable, Double> value : values) {
+        for (Map.Entry<Feature, Double> value : values) {
             sum += value.getValue();
-            result.add(new Classification(value.getKey(), value.getValue()));
+            //TODO: result.add(new Classification(value.getKey(), value.getValue()));
         }
         Collections.sort(result, new ClassificationComparator());
         for (int i = 0; i < result.size(); i++) {

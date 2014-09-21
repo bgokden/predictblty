@@ -6,10 +6,12 @@ import java.util.Collection;
  * Created by berkgokden on 9/9/14.
  */
 public class ClassifiedFeatureDatum {
-    private Classification classification;
-    private Comparable feature;
+    protected Classification classification;
+    protected Feature feature;
 
-    public ClassifiedFeatureDatum(Comparable feature, Classification classification) {
+    public ClassifiedFeatureDatum() {}
+
+    public ClassifiedFeatureDatum(Feature feature, Classification classification) {
         this.feature = feature;
         this.classification = classification;
     }
@@ -22,11 +24,11 @@ public class ClassifiedFeatureDatum {
         this.classification = classification;
     }
 
-    public Comparable getFeature() {
+    public Feature getFeature() {
         return feature;
     }
 
-    public void setFeature(Comparable feature) {
+    public void setFeature(Feature feature) {
         this.feature = feature;
     }
 }

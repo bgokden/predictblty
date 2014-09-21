@@ -10,42 +10,48 @@ import java.io.IOException;
  * Created by berkgokden on 9/13/14.
  */
 public class FeatureConfidenceTuple implements DataSerializable {
-    private Comparable feature;
-    private double confidenceCoefficent;
+    private Feature feature;
+    private double confidenceCoefficient;
 
     public FeatureConfidenceTuple(){}
 
+    //TODO this is created just for compatibility
     public FeatureConfidenceTuple(Comparable feature, double confidenceCoefficient) {
-        this.feature = feature;
-        this.confidenceCoefficent = confidenceCoefficient;
+        this.feature = null;
+        this.confidenceCoefficient = confidenceCoefficient;
     }
 
-    public Comparable getFeature() {
+    public FeatureConfidenceTuple(Feature feature, double confidenceCoefficient) {
+        this.feature = feature;
+        this.confidenceCoefficient = confidenceCoefficient;
+    }
+
+    public Feature getFeature() {
         return feature;
     }
 
-    public void setFeature(Comparable feature) {
+    public void setFeature(Feature feature) {
         this.feature = feature;
     }
 
-    public double getConfidenceCoefficent() {
-        return confidenceCoefficent;
+    public double getConfidenceCoefficient() {
+        return confidenceCoefficient;
     }
 
-    public void setConfidenceCoefficent(double confidenceCoefficent) {
-        this.confidenceCoefficent = confidenceCoefficent;
+    public void setConfidenceCoefficient(double confidenceCoefficient) {
+        this.confidenceCoefficient = confidenceCoefficient;
     }
 
     @Override
     public void writeData(ObjectDataOutput objectDataOutput) throws IOException {
         objectDataOutput.writeObject(feature);
-        objectDataOutput.writeDouble(confidenceCoefficent);
+        objectDataOutput.writeDouble(confidenceCoefficient);
     }
 
     @Override
     public void readData(ObjectDataInput objectDataInput) throws IOException {
         this.feature = objectDataInput.readObject();
-        this.confidenceCoefficent = objectDataInput.readDouble();
+        this.confidenceCoefficient = objectDataInput.readDouble();
     }
 
     @Override

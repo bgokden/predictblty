@@ -14,34 +14,31 @@ import java.util.List;
 /**
  * Created by berkgokden on 9/13/14.
  */
-public class RecommendationMethod implements MLMethod {
+public class RecommendationMethod extends MLMethod {
 
 
     private transient HazelcastInstance hazelcastInstance;
-    private MultiMap<Comparable, FeatureConfidenceTuple> multiMap;
+    private MultiMap<Feature, FeatureConfidenceTuple> multiMap;
     private String randomKey;
 
     public RecommendationMethod(HazelcastInstance hazelcastInstance) {
-        this.hazelcastInstance = hazelcastInstance;
+        super(hazelcastInstance, null);
         this.randomKey = RandomStringUtils.random(20);
 
         this.multiMap = hazelcastInstance.getMultiMap("traindata-"+this.randomKey);
     }
 
-    //@Override
-    public void setHazelcastInstance(HazelcastInstance hazelcastInstance) {
-        this.hazelcastInstance = hazelcastInstance;
-    }
-
     //I am not ok with this method
+    //I could have used a map here using Predicates but it will reduce prediction performance
+    //and prediction performance is much more impartant than training performance
     private void addToMultiMapWithCheckIfExists(ClassifiedFeatureDatum classifiedFeatureDatum) {
-        Comparable feature =  classifiedFeatureDatum.getFeature();
+        Feature feature =  classifiedFeatureDatum.getFeature();
         boolean foundAndSet = false;
         this.multiMap.lock(feature);
         Collection<FeatureConfidenceTuple>  featureConfidenceTuples = this.multiMap.get(feature);
         for (FeatureConfidenceTuple featureConfidenceTuple : featureConfidenceTuples) {
             if (featureConfidenceTuple.getFeature().equals(classifiedFeatureDatum.getClassification().getComparableClassification()) ) {
-                double confidenceCoefficient = classifiedFeatureDatum.getClassification().getConfidenceCoefficient() + featureConfidenceTuple.getConfidenceCoefficent();
+                double confidenceCoefficient = classifiedFeatureDatum.getClassification().getConfidenceCoefficient() + featureConfidenceTuple.getConfidenceCoefficient();
                 this.multiMap.remove(feature, featureConfidenceTuple);
                 foundAndSet = this.multiMap.put(feature, new FeatureConfidenceTuple(classifiedFeatureDatum.getClassification().getComparableClassification(), confidenceCoefficient));
                 break;
@@ -64,25 +61,25 @@ public class RecommendationMethod implements MLMethod {
     @Override
     public Collection<Classification> predict(Collection<FeatureConfidenceTuple> data) throws Exception {
         JobTracker jobTracker = hazelcastInstance.getJobTracker("default");
-        IMap<Comparable, Double> map = hazelcastInstance.getMap("predictdata-"+this.randomKey);
+        IMap<Feature, Double> map = hazelcastInstance.getMap("predictdata-"+this.randomKey);
 
         for (FeatureConfidenceTuple featureConfidenceTuple : data) {
-            map.put(featureConfidenceTuple.getFeature(), new Double(featureConfidenceTuple.getConfidenceCoefficent()));
+            map.put(featureConfidenceTuple.getFeature(), new Double(featureConfidenceTuple.getConfidenceCoefficient()));
         }
 
 
-        KeyValueSource<Comparable, Double> source = KeyValueSource.fromMap(map);
+        KeyValueSource<Feature, Double> source = KeyValueSource.fromMap(map);
 
-        Job<Comparable, Double> job = jobTracker.newJob(source);
-
-        JobCompletableFuture<List<Classification>> future = job //
-                .mapper(new RecommendationMethodMapper(this.randomKey)) //
-                .combiner(new RecommendationMethodCombinerFactory()) //
-                .reducer(new RecommendationMethodReducerFactory()) //
-                .submit(new RecommendationMethodCollator());
+        Job<Feature, Double> job = jobTracker.newJob(source);
+//TODO
+//        JobCompletableFuture<List<Classification>> future = job //
+//                .mapper(new RecommendationMethodMapper(this.randomKey)) //
+//                .combiner(new RecommendationMethodCombinerFactory()) //
+//                .reducer(new RecommendationMethodReducerFactory()) //
+//                .submit(new RecommendationMethodCollator());
 
         //System.out.println("Result: " + ToStringPrettyfier.toString(future.get()));
-        return future.get();
+        return null;//future.get();
     }
 
 }

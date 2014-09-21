@@ -7,10 +7,10 @@ import com.hazelcast.mapreduce.ReducerFactory;
  * Created by berkgokden on 9/13/14.
  */
 public class RecommendationMethodReducerFactory
-        implements ReducerFactory<Comparable, Double, Double> {
+        implements ReducerFactory<Feature, Double, Double> {
 
     @Override
-    public Reducer<Double, Double> newReducer(Comparable key) {
+    public Reducer<Double, Double> newReducer(Feature key) {
         return new InvertedReducer();
     }
 
