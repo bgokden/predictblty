@@ -54,7 +54,7 @@ public class RecommendationMethod extends MLMethod {
     public void train(Collection<ClassifiedFeatureDatum> data) throws Exception {
         for (ClassifiedFeatureDatum classifiedFeatureDatum : data) {
             this.addToMultiMapWithCheckIfExists(classifiedFeatureDatum);
-            //this.multiMap.put(classifiedFeatureDatum.getFeature(), new FeatureConfidenceTuple(classifiedFeatureDatum.getClassification().getComparableClassification(), classifiedFeatureDatum.getClassification().getConfidenceCoefficient()));
+            this.multiMap.put(classifiedFeatureDatum.getFeature(), new FeatureConfidenceTuple(classifiedFeatureDatum.getClassification().getComparableClassification(), classifiedFeatureDatum.getClassification().getConfidenceCoefficient()));
         }
     }
 
