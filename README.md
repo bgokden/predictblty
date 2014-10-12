@@ -9,3 +9,5 @@ Recommandation Method based on co-occurence matrix is next in line to be support
 
 I am planning to support most of the methods supported by Apache Mahout.
 [Apache Mahout Algorithms](https://mahout.apache.org/users/basics/algorithms.html)
+
+NOTE: There is an issue with serialization so I am trying to fix it before continuing to add new functionality.
