@@ -1,26 +1,24 @@
 package com.hazelcast.machinelearning.model;
 
-import com.hazelcast.machinelearning.methods.impl.Classification;
-import com.hazelcast.machinelearning.methods.impl.ClassifiedFeatureDatum;
 import com.hazelcast.machinelearning.methods.impl.Feature;
 import com.hazelcast.nio.ObjectDataInput;
 import com.hazelcast.nio.ObjectDataOutput;
-import com.hazelcast.nio.serialization.DataSerializable;
 
 import java.io.IOException;
 
 /**
  * Created by berkgokden on 9/20/14.
  */
-public class IrisPlant extends ClassifiedFeatureDatum implements Feature<IrisPlant>, DataSerializable {
-    public IrisPlant() {
+public class IrisPlantFeature implements Feature<IrisPlantFeature>{
+    public IrisPlantFeature() {
     }
 
+    private double confidence;
     private double sepalLength;// in cm
     private double sepalWidth;// in cm
     private double petalLength;// in cm
     private double petalWidth;// in cm
-    private String plantClass;
+//    private String plantClass;
     // -- Iris Setosa
     // -- Iris Versicolour
     // -- Iris Virginica
@@ -57,30 +55,40 @@ public class IrisPlant extends ClassifiedFeatureDatum implements Feature<IrisPla
         this.petalWidth = petalWidth;
     }
 
-    public String getPlantClass() {
-        return plantClass;
-    }
-
-    public void setPlantClass(String plantClass) {
-        this.plantClass = plantClass;
-        this.classification = new Classification(this.plantClass);
-    }
-
-    @Override
-    public Feature getFeature() {
-        return this;
-    }
+//    public String getPlantClass() {
+//        return plantClass;
+//    }
+//
+//    public void setPlantClass(String plantClass) {
+//        this.plantClass = plantClass;
+//        this.classification = new Classification(this.plantClass);
+//    }
 
     @Override
-    public double distanceTo(IrisPlant feature) {
+    public double distanceTo(Feature<IrisPlantFeature> feature) {
         double distance = 0;
-        distance += Math.pow(this.sepalLength - feature.getSepalLength(),2);
-        distance += Math.pow(this.sepalWidth - feature.getSepalWidth(),2);
-        distance += Math.pow(this.petalLength - feature.getPetalLength(),2);
-        distance += Math.pow(this.petalWidth - feature.getPetalWidth(),2);
-        distance = Math.sqrt(distance); //You can skip this step
+        if (feature.getClass().equals(IrisPlantFeature.class)) {
+            IrisPlantFeature irisPlantFeature = (IrisPlantFeature) feature;
+
+            distance += Math.pow(this.sepalLength - irisPlantFeature.getSepalLength(), 2);
+            distance += Math.pow(this.sepalWidth - irisPlantFeature.getSepalWidth(), 2);
+            distance += Math.pow(this.petalLength - irisPlantFeature.getPetalLength(), 2);
+            distance += Math.pow(this.petalWidth - irisPlantFeature.getPetalWidth(), 2);
+            distance = Math.sqrt(distance); //You can skip this step
+        }
         return distance;
     }
+
+    @Override
+    public double getConfidence() {
+        return this.confidence;
+    }
+
+    @Override
+    public void setConfidence(double confidence) {
+        this.confidence = confidence;
+    }
+
 
     @Override
     public void writeData(ObjectDataOutput out) throws IOException {
@@ -88,7 +96,7 @@ public class IrisPlant extends ClassifiedFeatureDatum implements Feature<IrisPla
         out.writeDouble(this.sepalWidth);
         out.writeDouble(this.petalLength);
         out.writeDouble(this.petalWidth);
-        out.writeUTF(this.plantClass);
+        out.writeDouble(this.confidence);
     }
 
     @Override
@@ -97,7 +105,6 @@ public class IrisPlant extends ClassifiedFeatureDatum implements Feature<IrisPla
         this.sepalWidth = in.readDouble();
         this.petalLength = in.readDouble();
         this.petalWidth = in.readDouble();
-        String pClass = in.readUTF();
-        this.setPlantClass(pClass);
+        this.confidence = in.readDouble();
     }
 }

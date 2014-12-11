@@ -44,13 +44,15 @@ public class FeatureConfidenceTuple implements DataSerializable {
 
     @Override
     public void writeData(ObjectDataOutput objectDataOutput) throws IOException {
-        objectDataOutput.writeObject(feature);
+        //objectDataOutput.writeObject(feature);
+        feature.writeData(objectDataOutput);
         objectDataOutput.writeDouble(confidenceCoefficient);
     }
 
     @Override
     public void readData(ObjectDataInput objectDataInput) throws IOException {
-        this.feature = objectDataInput.readObject();
+        //this.feature = objectDataInput.readObject();
+        this.feature.readData(objectDataInput);
         this.confidenceCoefficient = objectDataInput.readDouble();
     }
 

@@ -32,7 +32,7 @@ public class DistanceBasedClassificationMethodReducerFactory implements com.haze
 
         public DistanceBasedClassificationMethodReducer(Integer limit) {
             this.limit = limit;
-            this.classifications = new ConcurrentSkipListSet<Classification>(new Classification.ClassificationComparator());
+            this.classifications = new ConcurrentSkipListSet<Classification>(); //TODO implement (new Classification.ClassificationComparator());
         }
 
         @Override

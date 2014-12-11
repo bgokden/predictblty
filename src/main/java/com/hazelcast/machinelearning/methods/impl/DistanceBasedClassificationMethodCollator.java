@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * Created by berkgokden on 9/19/14.
  */
-public class DistanceBasedClassificationMethodCollator implements Collator<Map.Entry<Feature, List<Classification>>, List<Classification>> {
+public class DistanceBasedClassificationMethodCollator<T,S> implements Collator<Map.Entry<Feature<T>, List<Classification<S>>>, List<Classification<S>>> {
     Integer limit;
     public DistanceBasedClassificationMethodCollator(Map<String, Object> options) {
         if ((limit = (Integer) options.get("limit")) == null) {
@@ -16,7 +16,7 @@ public class DistanceBasedClassificationMethodCollator implements Collator<Map.E
     }
 
     @Override
-    public List<Classification> collate(Iterable<Map.Entry<Feature, List<Classification>>> values) {
+    public List<Classification<S>> collate(Iterable<Map.Entry<Feature<T>, List<Classification<S>>>> values) {
         Map<Comparable, Classification> classificationMap = new HashMap<Comparable, Classification>();
         double coefficient = 0;
         Classification temp = null;

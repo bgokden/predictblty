@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * Created by berkgokden on 9/16/14.
  */
-public class DistanceBasedClassificationMethod extends MLMethod {
+public class DistanceBasedClassificationMethod<T, S> extends MLMethod<T, S> {
 
     private IMap<Feature, Classification> trainingdata;
 
@@ -28,21 +28,21 @@ public class DistanceBasedClassificationMethod extends MLMethod {
     }
 
     @Override
-    public void train(Collection<ClassifiedFeatureDatum> data) throws Exception {
+    public void train(Collection<ClassifiedFeatureDatum<T, S>> data) throws Exception {
         for (ClassifiedFeatureDatum classifiedFeatureDatum : data) {
-            this.trainingdata.set(classifiedFeatureDatum.getFeature(), classifiedFeatureDatum.getClassification());
+            this.trainingdata.put(classifiedFeatureDatum.getFeature(), classifiedFeatureDatum.getClassification());
         }
     }
 
     @Override
-    public Collection<Classification> predict(Collection<FeatureConfidenceTuple> data) throws Exception {
+    public Collection<Classification<S>> predict(Collection<Feature<T>> data) throws Exception {
         JobTracker jobTracker = hazelcastInstance.getJobTracker("default");
 
         KeyValueSource<Feature, Classification> source = KeyValueSource.fromMap(this.trainingdata);
 
         Job<Feature, Classification> job = jobTracker.newJob(source);
 
-        JobCompletableFuture<List<Classification>> future = job //
+        JobCompletableFuture<List<Classification<S>>> future = job //
                 .mapper(new DistanceBasedClassificationMethodMapper(this.options,data)) //
                 .combiner(new DistanceBasedClassificationMethodCombinerFactory(this.options)) //
                 .reducer(new DistanceBasedClassificationMethodReducerFactory(this.options)) //

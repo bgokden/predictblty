@@ -4,14 +4,10 @@ import com.hazelcast.config.Config;
 import com.hazelcast.config.NetworkConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
-import com.hazelcast.core.MultiMap;
 import com.hazelcast.machinelearning.csv.IrisPlantDataReader;
 import com.hazelcast.machinelearning.methods.DistanceBasedClassificationMethod;
-import com.hazelcast.machinelearning.methods.RecommendationMethod;
-import com.hazelcast.machinelearning.methods.SparseMatrixMultiplication;
 import com.hazelcast.machinelearning.methods.impl.*;
-import com.hazelcast.machinelearning.model.IrisPlant;
+import com.hazelcast.machinelearning.model.IrisPlantFeature;
 
 import java.io.InputStream;
 import java.util.*;
@@ -30,8 +26,8 @@ public class Main {
         try {
             IrisPlantDataReader irisPlantDataReader = new IrisPlantDataReader();
             InputStream is = IrisPlantDataReader.class.getClassLoader().getResourceAsStream("bezdekIris.data");
-            List<IrisPlant> irisPlants = irisPlantDataReader.read(is);
-            Collection<ClassifiedFeatureDatum> plantsTrainData = new LinkedList<ClassifiedFeatureDatum>();
+            List<ClassifiedFeatureDatum<IrisPlantFeature>> irisPlants = irisPlantDataReader.read(is);
+            Collection<ClassifiedFeatureDatum<IrisPlantFeature>> plantsTrainData = new LinkedList<ClassifiedFeatureDatum<IrisPlantFeature>>();
             Collection<FeatureConfidenceTuple> plantsPredictData = new LinkedList<FeatureConfidenceTuple>();
             int trainSize = (int) Math.round(0.7 * irisPlants.size());
             int predictSize = irisPlants.size() - trainSize;
@@ -46,13 +42,13 @@ public class Main {
                     plantsTrainData.add(irisPlants.get(i));
                 }
             }
-            DistanceBasedClassificationMethod method = new DistanceBasedClassificationMethod(hazelcastInstance, null);
+            DistanceBasedClassificationMethod<IrisPlantFeature> method = new DistanceBasedClassificationMethod<IrisPlantFeature>(hazelcastInstance, null);
             method.train(plantsTrainData);
 
             int success = 0;
 
             for (Integer integer : predictDataIndex) {
-                ClassifiedFeatureDatum classifiedFeatureDatum = irisPlants.get(integer.intValue());
+                ClassifiedFeatureDatum<IrisPlantFeature> classifiedFeatureDatum = irisPlants.get(integer.intValue());
                 //System.out.println("Class to predict: " + classifiedFeatureDatum.getClassification().toString());
                 FeatureConfidenceTuple featureConfidenceTuple = new FeatureConfidenceTuple(classifiedFeatureDatum.getFeature(), 1.0);
                 plantsPredictData.clear();

@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Created by berkgokden on 9/22/14.
  */
-public class StringFeature implements Feature<String>, DataSerializable, Comparable<StringFeature> {
+public class StringFeature extends Feature<String> implements Comparable<StringFeature> {
 
     private String data;
     public StringFeature() {}

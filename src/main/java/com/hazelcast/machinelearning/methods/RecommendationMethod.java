@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by berkgokden on 9/13/14.
  */
-public class RecommendationMethod extends MLMethod {
+public class RecommendationMethod<T> extends MLMethod<T> {
 
 
     private transient HazelcastInstance hazelcastInstance;
@@ -51,7 +51,7 @@ public class RecommendationMethod extends MLMethod {
     }
 
     @Override
-    public void train(Collection<ClassifiedFeatureDatum> data) throws Exception {
+    public void train(Collection<ClassifiedFeatureDatum<T>> data) throws Exception {
         for (ClassifiedFeatureDatum classifiedFeatureDatum : data) {
             this.addToMultiMapWithCheckIfExists(classifiedFeatureDatum);
             this.multiMap.put(classifiedFeatureDatum.getFeature(), new FeatureConfidenceTuple(classifiedFeatureDatum.getClassification().getComparableClassification(), classifiedFeatureDatum.getClassification().getConfidenceCoefficient()));

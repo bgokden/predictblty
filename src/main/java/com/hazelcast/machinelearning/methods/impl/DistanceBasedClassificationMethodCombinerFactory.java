@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
 /**
  * Created by berkgokden on 9/17/14.
  */
-public class DistanceBasedClassificationMethodCombinerFactory implements CombinerFactory<Feature, Classification, ClassificationListWrapper> {
+public class DistanceBasedClassificationMethodCombinerFactory<T, S> implements CombinerFactory<Feature<T>, Classification<S>, ClassificationListWrapper> {
     private Integer limit;
 
     public DistanceBasedClassificationMethodCombinerFactory(Map<String, Object> options) {
@@ -19,19 +19,19 @@ public class DistanceBasedClassificationMethodCombinerFactory implements Combine
     }
 
     @Override
-    public Combiner<Classification, ClassificationListWrapper> newCombiner(Feature key) {
+    public Combiner<Classification<S>, ClassificationListWrapper> newCombiner(Feature key) {
         return new DistanceBasedClassificationMethodCombiner(limit);
     }
 
-    private static class DistanceBasedClassificationMethodCombiner
-            extends Combiner<Classification, ClassificationListWrapper> {
+    private static class DistanceBasedClassificationMethodCombiner<T, S>
+            extends Combiner<Classification<S>, ClassificationListWrapper> {
 
         private Integer limit;
-        private ConcurrentSkipListSet<Classification> classifications = null;
+        private ConcurrentSkipListSet<Classification<S>> classifications = null;
 
         public DistanceBasedClassificationMethodCombiner(Integer limit) {
             this.limit = limit;
-            this.classifications = new ConcurrentSkipListSet<Classification>(new Classification.ClassificationComparator());
+            this.classifications = new ConcurrentSkipListSet<Classification<S>>();//TODO implement: (new Classification<S>.ClassificationComparator());
         }
 
 
@@ -46,7 +46,7 @@ public class DistanceBasedClassificationMethodCombinerFactory implements Combine
             List<Classification> classificationsToReturn = new ArrayList<Classification>(this.limit);
 
             int i = 0;
-            Iterator<Classification> iterator = this.classifications.iterator();
+            Iterator<Classification<S>> iterator = this.classifications.iterator();
             while (iterator.hasNext() && i++ <= this.limit) {
                 classificationsToReturn.add(iterator.next());
             }
