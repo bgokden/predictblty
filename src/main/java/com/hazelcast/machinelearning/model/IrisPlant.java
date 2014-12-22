@@ -9,7 +9,7 @@ import com.hazelcast.machinelearning.MLCommon.Feature;
  */
 public class IrisPlant extends ClassifiedFeature {
     public IrisPlant() {
-        super(new Feature(), new Classification());
+        super();
     }
 
     private double sepalLength;// in cm
@@ -27,7 +27,7 @@ public class IrisPlant extends ClassifiedFeature {
 
     public void setSepalLength(double sepalLength) {
         this.sepalLength = sepalLength;
-        this.getFeature().add("sepalLength", sepalLength);
+        this.getFeatureMap().put("sepalLength", sepalLength);
     }
 
     public double getSepalWidth() {
@@ -36,7 +36,7 @@ public class IrisPlant extends ClassifiedFeature {
 
     public void setSepalWidth(double sepalWidth) {
         this.sepalWidth = sepalWidth;
-        this.getFeature().add("sepalWidth", sepalWidth);
+        this.getFeatureMap().put("sepalWidth", sepalWidth);
     }
 
     public double getPetalLength() {
@@ -45,7 +45,7 @@ public class IrisPlant extends ClassifiedFeature {
 
     public void setPetalLength(double petalLength) {
         this.petalLength = petalLength;
-        this.getFeature().add("petalLength", petalLength);
+        this.getFeatureMap().put("petalLength", petalLength);
     }
 
     public double getPetalWidth() {
@@ -54,7 +54,7 @@ public class IrisPlant extends ClassifiedFeature {
 
     public void setPetalWidth(double petalWidth) {
         this.petalWidth = petalWidth;
-        this.getFeature().add("petalWidth", petalWidth);
+        this.getFeatureMap().put("petalWidth", petalWidth);
     }
 
     public String getPlantClass() {

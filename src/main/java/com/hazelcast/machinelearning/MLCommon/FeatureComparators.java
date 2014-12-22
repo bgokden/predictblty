@@ -1,5 +1,6 @@
 package com.hazelcast.machinelearning.MLCommon;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -8,14 +9,9 @@ import java.util.Map;
 public class FeatureComparators {
     public static class DoubleFeatureComparator implements IFeatureComparator {
         @Override
-        public double compare(Feature o1, Feature o2) {
-            return this.compare(o1.getFeatureMap(), o2.getFeatureMap());
-        }
-
-        @Override
-        public double compare(Map<String, Object> o1, Map<String, Object> o2) {
+        public double compare(Map<String, Serializable> o1, Map<String, Serializable> o2) {
             double sum = 0;
-            for (Map.Entry<String, Object> entry : o1.entrySet())
+            for (Map.Entry<String, Serializable> entry : o1.entrySet())
             {
                 try {
                     Double value1 = (Double) entry.getValue();

@@ -13,14 +13,21 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by berkgokden on 12/21/14.
  */
 public class Feature implements DataSerializable, Serializable {
-    protected Map<String, Object> featureMap;
+    private static final long serialVersionUID = 1L;
+    protected ConcurrentHashMap<String, Serializable> featureMap;
 
     public Feature() {
     }
 
-    public void add(String key, Object value) {
+    public Feature(Feature feature) { //copy constructer
+        for (Map.Entry<String, Serializable> entry : feature.getFeatureMap().entrySet()) {
+            this.add(entry.getKey(), entry.getValue());
+        }
+    }
+
+    public void add(String key, Serializable value) {
         if (this.featureMap == null) {
-            this.featureMap = new ConcurrentHashMap<String, Object>();
+            this.featureMap = new ConcurrentHashMap<String, Serializable>();
         }
         this.featureMap.put(key, value);
     }
@@ -32,11 +39,11 @@ public class Feature implements DataSerializable, Serializable {
         return this.featureMap.get(key);
     }
 
-    public Map<String, Object> getFeatureMap() {
+    public ConcurrentHashMap<String, Serializable> getFeatureMap() {
         return featureMap;
     }
 
-    public void setFeatureMap(Map<String, Object> featureMap) {
+    public void setFeatureMap(ConcurrentHashMap<String, Serializable> featureMap) {
         this.featureMap = featureMap;
     }
 
@@ -45,7 +52,7 @@ public class Feature implements DataSerializable, Serializable {
     public void writeData(ObjectDataOutput out) throws IOException {
         if (this.featureMap != null) {
             out.writeInt(this.featureMap.size());
-            for (Map.Entry<String, Object> entry : this.featureMap.entrySet()) {
+            for (Map.Entry<String, Serializable> entry : this.featureMap.entrySet()) {
                 out.writeUTF(entry.getKey());
                 out.writeObject(entry.getValue());
             }
@@ -59,7 +66,7 @@ public class Feature implements DataSerializable, Serializable {
         int size = in.readInt();
         for (int i = 0; i < size; i++) {
             String key = in.readUTF();
-            Object value = in.readObject();
+            Serializable value = in.readObject();
             this.add(key, value);
         }
     }

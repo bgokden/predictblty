@@ -24,7 +24,7 @@ public class DistanceBasedClassificationAlgorithmTest {
     public void shouldPassWhenSuccessIsHigh() throws Exception {
         Hazelcast.shutdownAll();
         // Prepare Hazelcast cluster
-        HazelcastInstance hazelcastInstance = HazelcastHelper.buildCluster(2);
+        HazelcastInstance hazelcastInstance = HazelcastHelper.buildCluster(4);
 
         System.out.println("Clusters ready");
 
@@ -55,7 +55,7 @@ public class DistanceBasedClassificationAlgorithmTest {
             for (Integer integer : predictDataIndex) {
                 ClassifiedFeature classifiedFeature = irisPlants.get(integer.intValue());
                 //System.out.println("Class to predict: " + classifiedFeatureDatum.getClassification().toString());
-                UnclassifiedFeature unclassifiedFeature = new UnclassifiedFeature(classifiedFeature.getFeature());
+                UnclassifiedFeature unclassifiedFeature = new UnclassifiedFeature(classifiedFeature.getFeatureMap());
                 plantsPredictData.clear();
                 plantsPredictData.add(unclassifiedFeature);
                 Collection<Classification> classifications = algorithm.predict(plantsPredictData);

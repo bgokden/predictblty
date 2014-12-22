@@ -11,7 +11,7 @@ import java.util.Comparator;
 /**
  * Created by berkgokden on 12/17/14.
  */
-public class Classification implements DataSerializable, Serializable {
+public class Classification implements DataSerializable {
     private double confidence;
     private String classification;//I wanted to define it as an object but serialization could have issues with it
 

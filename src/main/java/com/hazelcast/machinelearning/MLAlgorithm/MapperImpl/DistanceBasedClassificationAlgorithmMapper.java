@@ -9,6 +9,7 @@ import com.hazelcast.machinelearning.MLCommon.UnclassifiedFeature;
 import com.hazelcast.mapreduce.Context;
 import com.hazelcast.mapreduce.Mapper;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Map;
 /**
  * Created by berkgokden on 9/16/14.
  */
-public class DistanceBasedClassificationAlgorithmMapper implements Mapper<Feature, Classification, Feature, Classification>, HazelcastInstanceAware {
+public class DistanceBasedClassificationAlgorithmMapper implements Mapper<Map<String, Serializable>, Classification, Map<String, Serializable>, Classification>, HazelcastInstanceAware {
 
     private transient HazelcastInstance hazelcastInstance;
     private Collection<UnclassifiedFeature> data;
@@ -29,17 +30,17 @@ public class DistanceBasedClassificationAlgorithmMapper implements Mapper<Featur
     }
 
     @Override
-    public void map(Feature key, Classification value, Context<Feature, Classification> context) {
+    public void map(Map<String, Serializable> key, Classification value, Context<Map<String, Serializable>, Classification> context) {
         for (UnclassifiedFeature unclassifiedFeature : this.data) {
 
             //double distance = unclassifiedFeature.getFeature().distanceTo(key);
-            double distance = this.comparator.compare(unclassifiedFeature.getFeature(), key);
+            double distance = this.comparator.compare(unclassifiedFeature.getFeatureMap(), key);
             double weight = Double.MAX_VALUE;
             if (distance != 0) {
                 weight = value.getConfidence() * unclassifiedFeature.getConfidence() / distance;
             }
-            context.emit(unclassifiedFeature.getFeature(), new Classification(value.getClassification(), weight));
-            System.out.println("New map:"+value.getClassification().toString());
+            context.emit(unclassifiedFeature.getFeatureMap(), new Classification(value.getClassification(), weight));
+            //System.out.println("New map:"+value.getClassification().toString());
         }
 
     }

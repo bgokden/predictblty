@@ -6,6 +6,7 @@ import com.hazelcast.machinelearning.MLCommon.Feature;
 import com.hazelcast.mapreduce.Reducer;
 import com.hazelcast.mapreduce.ReducerFactory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
 /**
  * Created by berkgokden on 9/19/14.
  */
-public class DistanceBasedClassificationAlgorithmReducerFactory implements ReducerFactory<Feature, ClassificationListWrapper, List<Classification>> {
+public class DistanceBasedClassificationAlgorithmReducerFactory implements ReducerFactory<Map<String, Serializable>, List<Classification>, List<Classification>> {
     private Integer limit;
     public DistanceBasedClassificationAlgorithmReducerFactory(Map<String, Object> options) {
         if ((limit = (Integer) options.get("limit")) == null) {
@@ -24,12 +25,12 @@ public class DistanceBasedClassificationAlgorithmReducerFactory implements Reduc
     }
 
     @Override
-    public Reducer<ClassificationListWrapper, List<Classification>> newReducer(Feature key) {
+    public Reducer<List<Classification>, List<Classification>> newReducer(Map<String, Serializable> key) {
         return new DistanceBasedClassificationAlgorithmReducer(limit);
     }
 
     private static class DistanceBasedClassificationAlgorithmReducer
-            extends Reducer<ClassificationListWrapper, List<Classification>> {
+            extends Reducer<List<Classification>, List<Classification>> {
 
         private ConcurrentSkipListSet<Classification> classifications = null;
         private Integer limit;
@@ -40,9 +41,9 @@ public class DistanceBasedClassificationAlgorithmReducerFactory implements Reduc
         }
 
         @Override
-        public void reduce(ClassificationListWrapper classifications) {
-            this.classifications.addAll(classifications.getClassificationList());
-            System.out.println("Reduce :");
+        public void reduce(List<Classification> classifications) {
+            this.classifications.addAll(classifications);
+            //System.out.println("Reduce :");
         }
 
         public void reduce(Classification classifications) {

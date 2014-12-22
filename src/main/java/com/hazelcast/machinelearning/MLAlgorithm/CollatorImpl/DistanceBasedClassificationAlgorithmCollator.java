@@ -4,12 +4,13 @@ import com.hazelcast.machinelearning.MLCommon.Classification;
 import com.hazelcast.machinelearning.MLCommon.Feature;
 import com.hazelcast.mapreduce.Collator;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by berkgokden on 9/19/14.
  */
-public class DistanceBasedClassificationAlgorithmCollator implements Collator<Map.Entry<Feature, List<Classification>>, List<Classification>> {
+public class DistanceBasedClassificationAlgorithmCollator implements Collator<Map.Entry<Map<String, Serializable>, List<Classification>>, List<Classification>> {
     Integer limit;
     public DistanceBasedClassificationAlgorithmCollator(Map<String, Object> options) {
         if ((limit = (Integer) options.get("limit")) == null) {
@@ -18,12 +19,12 @@ public class DistanceBasedClassificationAlgorithmCollator implements Collator<Ma
     }
 
     @Override
-    public List<Classification> collate(Iterable<Map.Entry<Feature, List<Classification>>> values) {
-        System.out.println("Collate :");
+    public List<Classification> collate(Iterable<Map.Entry<Map<String, Serializable>, List<Classification>>> values) {
+        //System.out.println("Collate :");
         Map<Comparable, Classification> classificationMap = new HashMap<Comparable, Classification>();
         double coefficient = 0;
         Classification temp = null;
-        for (Map.Entry<Feature, List<Classification>> value : values) {
+        for (Map.Entry<Map<String, Serializable>, List<Classification>> value : values) {
             List<Classification> classifications = value.getValue();
             for (int i = 0; i < classifications.size(); i++) {
                 coefficient = classifications.get(i).getConfidence();

@@ -6,30 +6,30 @@ import com.hazelcast.nio.serialization.DataSerializable;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by berkgokden on 12/17/14.
  */
 public class UnclassifiedFeature implements DataSerializable, Serializable {
-
-    protected Feature feature;
+    private static final long serialVersionUID = 1L;
     protected double confidence;
+    protected ConcurrentHashMap<String, Serializable> featureMap;
 
     public UnclassifiedFeature() {
-        this.feature = new Feature();
+        this.featureMap = new ConcurrentHashMap<String, Serializable>();
         this.confidence = 1.0;
     }
 
-    public UnclassifiedFeature(Feature feature) {
-        this.feature = feature;
+    public UnclassifiedFeature(ConcurrentHashMap<String, Serializable> feature) {
+        this.featureMap = feature;
         this.confidence = 1.0;
     }
 
-    public UnclassifiedFeature(Feature feature, double confidence) {
-        this.feature = feature;
+    public UnclassifiedFeature(ConcurrentHashMap<String, Serializable> feature, double confidence) {
+        this.featureMap = feature;
         this.confidence = confidence;
     }
-
 
     public double getConfidence() {
         return confidence;
@@ -39,24 +39,25 @@ public class UnclassifiedFeature implements DataSerializable, Serializable {
         this.confidence = confidence;
     }
 
-    public Feature getFeature() {
-        return feature;
-    }
 
-    public void setFeature(Feature feature) {
-        this.feature = feature;
-    }
 
     @Override
     public void writeData(ObjectDataOutput out) throws IOException {
-        this.feature.writeData(out);
+        out.writeObject(featureMap);
         out.writeDouble(confidence);
     }
 
     @Override
     public void readData(ObjectDataInput in) throws IOException {
-        this.feature = new Feature();
-        this.feature.readData(in);
+        this.featureMap = in.readObject();
         this.confidence = in.readDouble();
+    }
+
+    public ConcurrentHashMap<String, Serializable> getFeatureMap() {
+        return featureMap;
+    }
+
+    public void setFeatureMap(ConcurrentHashMap<String, Serializable> featureMap) {
+        this.featureMap = featureMap;
     }
 }

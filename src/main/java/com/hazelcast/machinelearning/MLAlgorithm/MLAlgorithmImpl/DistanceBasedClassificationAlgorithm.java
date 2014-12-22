@@ -13,6 +13,7 @@ import com.hazelcast.mapreduce.JobCompletableFuture;
 import com.hazelcast.mapreduce.JobTracker;
 import com.hazelcast.mapreduce.KeyValueSource;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ import java.util.Map;
  */
 public class DistanceBasedClassificationAlgorithm extends MLAlgorithm {
 
-    private IMap<Feature, Classification> trainingdata;
+    private IMap<Map<String, Serializable>, Classification> trainingdata;
 
     public DistanceBasedClassificationAlgorithm(HazelcastInstance hazelcastInstance, Map<String, Object> options) {
         super(hazelcastInstance, options);
@@ -35,7 +36,7 @@ public class DistanceBasedClassificationAlgorithm extends MLAlgorithm {
     @Override
     public void train(Collection<ClassifiedFeature> data) throws Exception {
         for (ClassifiedFeature classifiedFeature : data) {
-            this.trainingdata.set(classifiedFeature.getFeature(), classifiedFeature.getClassification());
+            this.trainingdata.set(classifiedFeature.getFeatureMap(), classifiedFeature.getClassification());
         }
     }
 
@@ -43,9 +44,9 @@ public class DistanceBasedClassificationAlgorithm extends MLAlgorithm {
     public Collection<Classification> predict(Collection<UnclassifiedFeature> data) throws Exception {
         JobTracker jobTracker = hazelcastInstance.getJobTracker("default");
 
-        KeyValueSource<Feature, Classification> source = KeyValueSource.fromMap(this.trainingdata);
+        KeyValueSource<Map<String, Serializable>, Classification> source = KeyValueSource.fromMap(this.trainingdata);
 
-        Job<Feature, Classification> job = jobTracker.newJob(source);
+        Job<Map<String, Serializable>, Classification> job = jobTracker.newJob(source);
 
         JobCompletableFuture<List<Classification>> future = job //
                 .mapper(new DistanceBasedClassificationAlgorithmMapper(this.options,data)) //
