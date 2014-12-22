@@ -2,9 +2,10 @@ package com.hazelcast.machinelearning.MLAlgorithm.MapperImpl;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.HazelcastInstanceAware;
-import com.hazelcast.machinelearning.methods.impl.Classification;
-import com.hazelcast.machinelearning.methods.impl.Feature;
-import com.hazelcast.machinelearning.methods.impl.FeatureConfidenceTuple;
+import com.hazelcast.machinelearning.MLCommon.Classification;
+import com.hazelcast.machinelearning.MLCommon.Feature;
+import com.hazelcast.machinelearning.MLCommon.IFeatureComparator;
+import com.hazelcast.machinelearning.MLCommon.UnclassifiedFeature;
 import com.hazelcast.mapreduce.Context;
 import com.hazelcast.mapreduce.Mapper;
 
@@ -19,26 +20,26 @@ import java.util.Map;
 public class DistanceBasedClassificationAlgorithmMapper implements Mapper<Feature, Classification, Feature, Classification>, HazelcastInstanceAware {
 
     private transient HazelcastInstance hazelcastInstance;
-    private Collection<FeatureConfidenceTuple> data;
+    private Collection<UnclassifiedFeature> data;
+    private IFeatureComparator comparator;
 
-    public DistanceBasedClassificationAlgorithmMapper(Map<String, Object> options, Collection<FeatureConfidenceTuple> data) {
+    public DistanceBasedClassificationAlgorithmMapper(Map<String, Object> options, Collection<UnclassifiedFeature> data) {
         this.data = data;
+        this.comparator = (IFeatureComparator) options.get("comparator");
     }
 
     @Override
     public void map(Feature key, Classification value, Context<Feature, Classification> context) {
-        for (FeatureConfidenceTuple featureConfidenceTuple : this.data) {
+        for (UnclassifiedFeature unclassifiedFeature : this.data) {
 
-            double distance = featureConfidenceTuple.getFeature().distanceTo(key);
-            if (distance == 0) {
-                distance = Double.MIN_NORMAL;//kind of epsilon
+            //double distance = unclassifiedFeature.getFeature().distanceTo(key);
+            double distance = this.comparator.compare(unclassifiedFeature.getFeature(), key);
+            double weight = Double.MAX_VALUE;
+            if (distance != 0) {
+                weight = value.getConfidence() * unclassifiedFeature.getConfidence() / distance;
             }
-
-            double weight = featureConfidenceTuple.getConfidenceCoefficient() / distance;
-
-            List<Classification> list = new ArrayList<Classification>();
-            context.emit(featureConfidenceTuple.getFeature(), new Classification(value.getComparableClassification(), weight));
-
+            context.emit(unclassifiedFeature.getFeature(), new Classification(value.getClassification(), weight));
+            System.out.println("New map:"+value.getClassification().toString());
         }
 
     }

@@ -1,19 +1,15 @@
 package com.hazelcast.machinelearning.model;
 
-import com.hazelcast.machinelearning.methods.impl.Classification;
-import com.hazelcast.machinelearning.methods.impl.ClassifiedFeatureDatum;
-import com.hazelcast.machinelearning.methods.impl.Feature;
-import com.hazelcast.nio.ObjectDataInput;
-import com.hazelcast.nio.ObjectDataOutput;
-import com.hazelcast.nio.serialization.DataSerializable;
-
-import java.io.IOException;
+import com.hazelcast.machinelearning.MLCommon.Classification;
+import com.hazelcast.machinelearning.MLCommon.ClassifiedFeature;
+import com.hazelcast.machinelearning.MLCommon.Feature;
 
 /**
  * Created by berkgokden on 9/20/14.
  */
-public class IrisPlant extends ClassifiedFeatureDatum implements Feature<IrisPlant>, DataSerializable {
+public class IrisPlant extends ClassifiedFeature {
     public IrisPlant() {
+        super(new Feature(), new Classification());
     }
 
     private double sepalLength;// in cm
@@ -31,6 +27,7 @@ public class IrisPlant extends ClassifiedFeatureDatum implements Feature<IrisPla
 
     public void setSepalLength(double sepalLength) {
         this.sepalLength = sepalLength;
+        this.getFeature().add("sepalLength", sepalLength);
     }
 
     public double getSepalWidth() {
@@ -39,6 +36,7 @@ public class IrisPlant extends ClassifiedFeatureDatum implements Feature<IrisPla
 
     public void setSepalWidth(double sepalWidth) {
         this.sepalWidth = sepalWidth;
+        this.getFeature().add("sepalWidth", sepalWidth);
     }
 
     public double getPetalLength() {
@@ -47,6 +45,7 @@ public class IrisPlant extends ClassifiedFeatureDatum implements Feature<IrisPla
 
     public void setPetalLength(double petalLength) {
         this.petalLength = petalLength;
+        this.getFeature().add("petalLength", petalLength);
     }
 
     public double getPetalWidth() {
@@ -55,6 +54,7 @@ public class IrisPlant extends ClassifiedFeatureDatum implements Feature<IrisPla
 
     public void setPetalWidth(double petalWidth) {
         this.petalWidth = petalWidth;
+        this.getFeature().add("petalWidth", petalWidth);
     }
 
     public String getPlantClass() {
@@ -64,40 +64,5 @@ public class IrisPlant extends ClassifiedFeatureDatum implements Feature<IrisPla
     public void setPlantClass(String plantClass) {
         this.plantClass = plantClass;
         this.classification = new Classification(this.plantClass);
-    }
-
-    @Override
-    public Feature getFeature() {
-        return this;
-    }
-
-    @Override
-    public double distanceTo(IrisPlant feature) {
-        double distance = 0;
-        distance += Math.pow(this.sepalLength - feature.getSepalLength(),2);
-        distance += Math.pow(this.sepalWidth - feature.getSepalWidth(),2);
-        distance += Math.pow(this.petalLength - feature.getPetalLength(),2);
-        distance += Math.pow(this.petalWidth - feature.getPetalWidth(),2);
-        distance = Math.sqrt(distance); //You can skip this step
-        return distance;
-    }
-
-    @Override
-    public void writeData(ObjectDataOutput out) throws IOException {
-        out.writeDouble(this.sepalLength);
-        out.writeDouble(this.sepalWidth);
-        out.writeDouble(this.petalLength);
-        out.writeDouble(this.petalWidth);
-        out.writeUTF(this.plantClass);
-    }
-
-    @Override
-    public void readData(ObjectDataInput in) throws IOException {
-        this.sepalLength = in.readDouble();
-        this.sepalWidth = in.readDouble();
-        this.petalLength = in.readDouble();
-        this.petalWidth = in.readDouble();
-        String pClass = in.readUTF();
-        this.setPlantClass(pClass);
     }
 }

@@ -3,9 +3,9 @@ package com.hazelcast.machinelearning.MLAlgorithm;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.HazelcastInstanceAware;
 import com.hazelcast.core.IdGenerator;
-import com.hazelcast.machinelearning.methods.impl.Classification;
-import com.hazelcast.machinelearning.methods.impl.ClassifiedFeatureDatum;
-import com.hazelcast.machinelearning.methods.impl.FeatureConfidenceTuple;
+import com.hazelcast.machinelearning.MLCommon.Classification;
+import com.hazelcast.machinelearning.MLCommon.ClassifiedFeature;
+import com.hazelcast.machinelearning.MLCommon.UnclassifiedFeature;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -37,8 +37,8 @@ public abstract class MLAlgorithm implements HazelcastInstanceAware {
         }
     }
 
-    public abstract void  train(Collection<ClassifiedFeatureDatum> data) throws Exception;
-    public abstract Collection<Classification> predict(Collection<FeatureConfidenceTuple> data) throws Exception;
+    public abstract void  train(Collection<ClassifiedFeature> data) throws Exception;
+    public abstract Collection<Classification> predict(Collection<UnclassifiedFeature> data) throws Exception;
 
     @Override
     public void setHazelcastInstance(HazelcastInstance hazelcastInstance) {

@@ -1,9 +1,10 @@
 package com.hazelcast.machinelearning.MLAlgorithm.ReducerImpl;
 
-import com.hazelcast.machinelearning.methods.impl.Classification;
-import com.hazelcast.machinelearning.methods.impl.ClassificationListWrapper;
-import com.hazelcast.machinelearning.methods.impl.Feature;
+import com.hazelcast.machinelearning.MLCommon.Classification;
+import com.hazelcast.machinelearning.MLCommon.ClassificationListWrapper;
+import com.hazelcast.machinelearning.MLCommon.Feature;
 import com.hazelcast.mapreduce.Reducer;
+import com.hazelcast.mapreduce.ReducerFactory;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,7 +15,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
 /**
  * Created by berkgokden on 9/19/14.
  */
-public class DistanceBasedClassificationAlgorithmReducerFactory implements com.hazelcast.mapreduce.ReducerFactory<Feature, ClassificationListWrapper, List<Classification>> {
+public class DistanceBasedClassificationAlgorithmReducerFactory implements ReducerFactory<Feature, ClassificationListWrapper, List<Classification>> {
     private Integer limit;
     public DistanceBasedClassificationAlgorithmReducerFactory(Map<String, Object> options) {
         if ((limit = (Integer) options.get("limit")) == null) {
@@ -24,16 +25,16 @@ public class DistanceBasedClassificationAlgorithmReducerFactory implements com.h
 
     @Override
     public Reducer<ClassificationListWrapper, List<Classification>> newReducer(Feature key) {
-        return new DistanceBasedClassificationMethodReducer(limit);
+        return new DistanceBasedClassificationAlgorithmReducer(limit);
     }
 
-    private static class DistanceBasedClassificationMethodReducer
+    private static class DistanceBasedClassificationAlgorithmReducer
             extends Reducer<ClassificationListWrapper, List<Classification>> {
 
         private ConcurrentSkipListSet<Classification> classifications = null;
         private Integer limit;
 
-        public DistanceBasedClassificationMethodReducer(Integer limit) {
+        public DistanceBasedClassificationAlgorithmReducer(Integer limit) {
             this.limit = limit;
             this.classifications = new ConcurrentSkipListSet<Classification>(new Classification.ClassificationComparator());
         }
@@ -41,6 +42,7 @@ public class DistanceBasedClassificationAlgorithmReducerFactory implements com.h
         @Override
         public void reduce(ClassificationListWrapper classifications) {
             this.classifications.addAll(classifications.getClassificationList());
+            System.out.println("Reduce :");
         }
 
         public void reduce(Classification classifications) {

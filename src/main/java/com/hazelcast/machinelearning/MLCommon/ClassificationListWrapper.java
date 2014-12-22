@@ -1,21 +1,21 @@
 package com.hazelcast.machinelearning.MLCommon;
 
-import com.hazelcast.machinelearning.methods.impl.Classification;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by berkgokden on 9/21/14.
  */
-public class ClassificationListWrapper {
-    private List<com.hazelcast.machinelearning.methods.impl.Classification> classificationList;
+public class ClassificationListWrapper implements Serializable {
+    private List<Classification> classificationList;
 
     public ClassificationListWrapper() {}
-    public ClassificationListWrapper(List<com.hazelcast.machinelearning.methods.impl.Classification> classificationList) {
+    public ClassificationListWrapper(List<Classification> classificationList) {
         this.classificationList = classificationList;
     }
 
-    public List<com.hazelcast.machinelearning.methods.impl.Classification> getClassificationList() {
+    public List<Classification> getClassificationList() {
         return classificationList;
     }
 
