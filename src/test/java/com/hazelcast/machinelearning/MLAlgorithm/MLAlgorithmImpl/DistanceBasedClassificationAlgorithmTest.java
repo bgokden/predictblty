@@ -9,7 +9,7 @@ import com.hazelcast.machinelearning.MLCommon.ClassifiedFeature;
 import com.hazelcast.machinelearning.MLCommon.HazelcastHelper;
 import com.hazelcast.machinelearning.MLCommon.UnclassifiedFeature;
 import com.hazelcast.machinelearning.csv.IrisPlantDataReader;
-import com.hazelcast.machinelearning.methods.impl.ToStringPrettyfier;
+import com.hazelcast.machinelearning.ToStringPrettyfier;
 import com.hazelcast.machinelearning.model.IrisPlant;
 import org.junit.Test;
 

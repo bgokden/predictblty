@@ -3,16 +3,13 @@ package com.hazelcast.machinelearning.MLAlgorithm.MapperImpl;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.HazelcastInstanceAware;
 import com.hazelcast.machinelearning.MLCommon.Classification;
-import com.hazelcast.machinelearning.MLCommon.Feature;
 import com.hazelcast.machinelearning.MLCommon.IFeatureComparator;
 import com.hazelcast.machinelearning.MLCommon.UnclassifiedFeature;
 import com.hazelcast.mapreduce.Context;
 import com.hazelcast.mapreduce.Mapper;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 /**

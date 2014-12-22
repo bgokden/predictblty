@@ -1,7 +1,6 @@
 package com.hazelcast.machinelearning.MLAlgorithm.CollatorImpl;
 
 import com.hazelcast.machinelearning.MLCommon.Classification;
-import com.hazelcast.machinelearning.MLCommon.Feature;
 import com.hazelcast.mapreduce.Collator;
 
 import java.io.Serializable;

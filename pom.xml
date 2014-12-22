@@ -15,12 +15,6 @@
             <!--<version>3.5-SNAPSHOT</version>-->
         <!--</dependency>-->
 
-        <!--<dependency>-->
-            <!--<groupId>com.hazelcast</groupId>-->
-            <!--<artifactId>hazelcast</artifactId>-->
-            <!--<version>3.3.3</version>-->
-        <!--</dependency>-->
-
         <dependency>
         <groupId>com.hazelcast</groupId>
         <artifactId>hazelcast</artifactId>
@@ -39,19 +33,19 @@
             <version>3.3.2</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.orientechnologies</groupId>
-            <artifactId>orient-commons</artifactId>
-            <version>1.7.6</version>
-            <type>bundle</type>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.orientechnologies</groupId>-->
+            <!--<artifactId>orient-commons</artifactId>-->
+            <!--<version>1.7.6</version>-->
+            <!--<type>bundle</type>-->
+        <!--</dependency>-->
 
-        <dependency>
-            <groupId>com.orientechnologies</groupId>
-            <artifactId>orientdb-core</artifactId>
-            <version>1.7.6</version>
-            <type>bundle</type>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.orientechnologies</groupId>-->
+            <!--<artifactId>orientdb-core</artifactId>-->
+            <!--<version>1.7.6</version>-->
+            <!--<type>bundle</type>-->
+        <!--</dependency>-->
     </dependencies>
 
 
@@ -80,19 +74,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>sonatype-snapshots</id>
-            <name>Sonatype Snapshot Repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>sonatype-snapshots</id>-->
+            <!--<name>Sonatype Snapshot Repository</name>-->
+            <!--<url>https://oss.sonatype.org/content/repositories/snapshots</url>-->
+            <!--<releases>-->
+                <!--<enabled>false</enabled>-->
+            <!--</releases>-->
+            <!--<snapshots>-->
+                <!--<enabled>true</enabled>-->
+            <!--</snapshots>-->
+        <!--</repository>-->
+    <!--</repositories>-->
 
 
 </project>

@@ -1,6 +1,5 @@
 package com.hazelcast.machinelearning.MLAlgorithm.CombinerImpl;
 
-import com.hazelcast.machinelearning.MLCommon.Feature;
 import com.hazelcast.machinelearning.MLCommon.Classification;
 import com.hazelcast.mapreduce.Combiner;
 import com.hazelcast.mapreduce.CombinerFactory;

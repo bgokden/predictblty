@@ -2,7 +2,6 @@ package com.hazelcast.machinelearning.model;
 
 import com.hazelcast.machinelearning.MLCommon.Classification;
 import com.hazelcast.machinelearning.MLCommon.ClassifiedFeature;
-import com.hazelcast.machinelearning.MLCommon.Feature;
 
 /**
  * Created by berkgokden on 9/20/14.

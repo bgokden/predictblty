@@ -1,8 +1,6 @@
 package com.hazelcast.machinelearning.MLAlgorithm.ReducerImpl;
 
 import com.hazelcast.machinelearning.MLCommon.Classification;
-import com.hazelcast.machinelearning.MLCommon.ClassificationListWrapper;
-import com.hazelcast.machinelearning.MLCommon.Feature;
 import com.hazelcast.mapreduce.Reducer;
 import com.hazelcast.mapreduce.ReducerFactory;
 
