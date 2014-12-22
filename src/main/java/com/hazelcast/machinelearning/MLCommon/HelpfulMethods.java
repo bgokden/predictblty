@@ -4,13 +4,16 @@ import com.hazelcast.config.Config;
 import com.hazelcast.config.NetworkConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.machinelearning.annotations.FeatureInfo;
 
+import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.Arrays;
 
 /**
  * Created by berkgokden on 12/21/14.
  */
-public class HazelcastHelper {
+public class HelpfulMethods {
     /*
     * Build cluster method taken from hazelcast-mapreduce-presentation
     * */
@@ -44,4 +47,7 @@ public class HazelcastHelper {
         }
         return hazelcastInstances;
     }
+
+
+
 }

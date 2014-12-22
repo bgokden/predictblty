@@ -8,14 +8,12 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.junit.Assert.*;
-
 public class UnclassifiedFeatureTest {
 
     @Test
     public void shouldPassWhenSerialized() throws Exception {
         try {
-            HazelcastInstance[] hz = HazelcastHelper.buildClusterReturnCluster(2);
+            HazelcastInstance[] hz = HelpfulMethods.buildClusterReturnCluster(2);
 
             Map<String, UnclassifiedFeature> map = hz[0].getMap("map");
             ConcurrentHashMap<String, Serializable> f = new ConcurrentHashMap<String, Serializable>();

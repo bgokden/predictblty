@@ -18,6 +18,7 @@ public class ClassifiedFeature implements DataSerializable {
 
     public ClassifiedFeature() {
         this.featureMap = new ConcurrentHashMap<String, Serializable>();
+        this.classification = new Classification();
     }
 
     public ClassifiedFeature(ConcurrentHashMap<String, Serializable> feature, Classification classification) {

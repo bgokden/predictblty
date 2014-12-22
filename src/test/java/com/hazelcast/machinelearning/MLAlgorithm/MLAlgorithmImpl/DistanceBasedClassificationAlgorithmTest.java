@@ -4,10 +4,7 @@ package com.hazelcast.machinelearning.MLAlgorithm.MLAlgorithmImpl;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.machinelearning.MLAlgorithm.MLAlgorithm;
-import com.hazelcast.machinelearning.MLCommon.Classification;
-import com.hazelcast.machinelearning.MLCommon.ClassifiedFeature;
-import com.hazelcast.machinelearning.MLCommon.HazelcastHelper;
-import com.hazelcast.machinelearning.MLCommon.UnclassifiedFeature;
+import com.hazelcast.machinelearning.MLCommon.*;
 import com.hazelcast.machinelearning.csv.IrisPlantDataReader;
 import com.hazelcast.machinelearning.ToStringPrettyfier;
 import com.hazelcast.machinelearning.model.IrisPlant;
@@ -16,15 +13,13 @@ import org.junit.Test;
 import java.io.InputStream;
 import java.util.*;
 
-import static org.junit.Assert.*;
-
 public class DistanceBasedClassificationAlgorithmTest {
 
     @Test
     public void shouldPassWhenSuccessIsHigh() throws Exception {
         Hazelcast.shutdownAll();
         // Prepare Hazelcast cluster
-        HazelcastInstance hazelcastInstance = HazelcastHelper.buildCluster(4);
+        HazelcastInstance hazelcastInstance = HelpfulMethods.buildCluster(4);
 
         System.out.println("Clusters ready");
 
@@ -44,7 +39,7 @@ public class DistanceBasedClassificationAlgorithmTest {
 
             for (int i = 0; i < irisPlants.size(); i++) {
                 if (!predictDataIndex.contains(i)) {
-                    plantsTrainData.add(irisPlants.get(i));
+                    plantsTrainData.add(Reflections.getClassifiedFeatureFromObject(irisPlants.get(i)));
                 }
             }
             MLAlgorithm algorithm = new DistanceBasedClassificationAlgorithm(hazelcastInstance);
@@ -53,7 +48,7 @@ public class DistanceBasedClassificationAlgorithmTest {
             int success = 0;
 
             for (Integer integer : predictDataIndex) {
-                ClassifiedFeature classifiedFeature = irisPlants.get(integer.intValue());
+                ClassifiedFeature classifiedFeature = Reflections.getClassifiedFeatureFromObject(irisPlants.get(integer.intValue()));
                 //System.out.println("Class to predict: " + classifiedFeatureDatum.getClassification().toString());
                 UnclassifiedFeature unclassifiedFeature = new UnclassifiedFeature(classifiedFeature.getFeatureMap());
                 plantsPredictData.clear();

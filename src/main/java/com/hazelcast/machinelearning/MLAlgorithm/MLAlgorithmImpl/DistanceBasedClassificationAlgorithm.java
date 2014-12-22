@@ -59,7 +59,7 @@ public class DistanceBasedClassificationAlgorithm extends MLAlgorithm {
                 .combiner(new DistanceBasedClassificationAlgorithmCombinerFactory(this.options)) //
                 .reducer(new DistanceBasedClassificationAlgorithmReducerFactory(this.options)) //
                 .submit(new DistanceBasedClassificationAlgorithmCollator(this.options));
-        
+
         return future.get();
     }
 
