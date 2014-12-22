@@ -47,7 +47,7 @@ public class DistanceBasedClassificationAlgorithmTest {
                     plantsTrainData.add(irisPlants.get(i));
                 }
             }
-            MLAlgorithm algorithm = new DistanceBasedClassificationAlgorithm(hazelcastInstance, null);
+            MLAlgorithm algorithm = new DistanceBasedClassificationAlgorithm(hazelcastInstance);
             algorithm.train(plantsTrainData);
 
             int success = 0;

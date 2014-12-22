@@ -30,11 +30,16 @@ public class DistanceBasedClassificationAlgorithm extends MLAlgorithm {
         this.options.putIfAbsent("limit", 10);
         this.options.putIfAbsent("order", 1);
         this.options.putIfAbsent("comparator", new FeatureComparators.DoubleFeatureComparator());
-        this.trainingdata = hazelcastInstance.getMap("traindata-" + this.getDataId());
     }
+
+    public DistanceBasedClassificationAlgorithm(HazelcastInstance hazelcastInstance) {
+        this(hazelcastInstance, null);
+    }
+
 
     @Override
     public void train(Collection<ClassifiedFeature> data) throws Exception {
+        this.trainingdata = getTrainingdata();
         for (ClassifiedFeature classifiedFeature : data) {
             this.trainingdata.set(classifiedFeature.getFeatureMap(), classifiedFeature.getClassification());
         }
@@ -42,6 +47,7 @@ public class DistanceBasedClassificationAlgorithm extends MLAlgorithm {
 
     @Override
     public Collection<Classification> predict(Collection<UnclassifiedFeature> data) throws Exception {
+        this.trainingdata = getTrainingdata();
         JobTracker jobTracker = hazelcastInstance.getJobTracker("default");
 
         KeyValueSource<Map<String, Serializable>, Classification> source = KeyValueSource.fromMap(this.trainingdata);
@@ -53,8 +59,19 @@ public class DistanceBasedClassificationAlgorithm extends MLAlgorithm {
                 .combiner(new DistanceBasedClassificationAlgorithmCombinerFactory(this.options)) //
                 .reducer(new DistanceBasedClassificationAlgorithmReducerFactory(this.options)) //
                 .submit(new DistanceBasedClassificationAlgorithmCollator(this.options));
-
-        //System.out.println("Result: " + ToStringPrettyfier.toString(future.get()));
+        
         return future.get();
+    }
+
+
+    public IMap<Map<String, Serializable>, Classification> getTrainingdata() {
+        if (trainingdata == null) {
+            this.trainingdata = hazelcastInstance.getMap("traindata-" + this.getDataId());
+        }
+        return trainingdata;
+    }
+
+    public void setTrainingdata(IMap<Map<String, Serializable>, Classification> trainingdata) {
+        this.trainingdata = trainingdata;
     }
 }
