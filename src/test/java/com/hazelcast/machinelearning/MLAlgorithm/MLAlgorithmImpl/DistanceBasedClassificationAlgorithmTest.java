@@ -1,10 +1,10 @@
-package com.hazelcast.machinelearning.MLAlgorithm.MLAlgorithmImpl;
+package com.hazelcast.machinelearning.mlalgorithm.mlalgorithmimpl;
 
 
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.machinelearning.MLAlgorithm.MLAlgorithm;
-import com.hazelcast.machinelearning.MLCommon.*;
+import com.hazelcast.machinelearning.mlalgorithm.MLAlgorithm;
+import com.hazelcast.machinelearning.mlcommon.*;
 import com.hazelcast.machinelearning.csv.IrisPlantDataReader;
 import com.hazelcast.machinelearning.ToStringPrettyfier;
 import com.hazelcast.machinelearning.model.IrisPlant;

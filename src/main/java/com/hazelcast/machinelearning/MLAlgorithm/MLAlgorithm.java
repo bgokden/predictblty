@@ -1,11 +1,9 @@
-package com.hazelcast.machinelearning.MLAlgorithm;
+package com.hazelcast.machinelearning.mlalgorithm;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.HazelcastInstanceAware;
 import com.hazelcast.core.IdGenerator;
-import com.hazelcast.machinelearning.MLCommon.Classification;
-import com.hazelcast.machinelearning.MLCommon.ClassifiedFeature;
-import com.hazelcast.machinelearning.MLCommon.UnclassifiedFeature;
+import com.hazelcast.machinelearning.mlcommon.Classification;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -54,7 +52,7 @@ public abstract class MLAlgorithm implements HazelcastInstanceAware {
         return hazelcastInstance;
     }
 
-    //A unique id for every MLAlgorithm instance used for map id, etc
+    //A unique id for every mlalgorithm instance used for map id, etc
     public Long getDataId() {
         if (this.dataId == null) {
             IdGenerator idGen = hazelcastInstance.getIdGenerator("dataId");

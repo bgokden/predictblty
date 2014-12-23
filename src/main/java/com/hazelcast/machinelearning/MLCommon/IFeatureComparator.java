@@ -1,4 +1,4 @@
-package com.hazelcast.machinelearning.MLCommon;
+package com.hazelcast.machinelearning.mlcommon;
 
 import java.io.Serializable;
 import java.util.Map;

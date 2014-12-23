@@ -1,13 +1,10 @@
-package com.hazelcast.machinelearning.MLCommon;
+package com.hazelcast.machinelearning.mlcommon;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.NetworkConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.machinelearning.annotations.FeatureInfo;
 
-import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collection;
 

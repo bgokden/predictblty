@@ -1,11 +1,11 @@
-package com.hazelcast.machinelearning.MLAlgorithm.MapperImpl;
+package com.hazelcast.machinelearning.mlalgorithm.mapperimpl;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.HazelcastInstanceAware;
-import com.hazelcast.machinelearning.MLCommon.Classification;
-import com.hazelcast.machinelearning.MLCommon.IFeatureComparator;
-import com.hazelcast.machinelearning.MLCommon.Reflections;
-import com.hazelcast.machinelearning.MLCommon.UnclassifiedFeature;
+import com.hazelcast.machinelearning.mlcommon.Classification;
+import com.hazelcast.machinelearning.mlcommon.IFeatureComparator;
+import com.hazelcast.machinelearning.mlcommon.Reflections;
+import com.hazelcast.machinelearning.mlcommon.UnclassifiedFeature;
 import com.hazelcast.mapreduce.Context;
 import com.hazelcast.mapreduce.Mapper;
 

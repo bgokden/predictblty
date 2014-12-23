@@ -1,13 +1,13 @@
-package com.hazelcast.machinelearning.MLAlgorithm.MLAlgorithmImpl;
+package com.hazelcast.machinelearning.mlalgorithm.mlalgorithmimpl;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
-import com.hazelcast.machinelearning.MLAlgorithm.CollatorImpl.DistanceBasedClassificationAlgorithmCollator;
-import com.hazelcast.machinelearning.MLAlgorithm.MLAlgorithm;
-import com.hazelcast.machinelearning.MLAlgorithm.CombinerImpl.DistanceBasedClassificationAlgorithmCombinerFactory;
-import com.hazelcast.machinelearning.MLAlgorithm.MapperImpl.DistanceBasedClassificationAlgorithmMapper;
-import com.hazelcast.machinelearning.MLAlgorithm.ReducerImpl.DistanceBasedClassificationAlgorithmReducerFactory;
-import com.hazelcast.machinelearning.MLCommon.*;
+import com.hazelcast.machinelearning.mlalgorithm.collatorimpl.DistanceBasedClassificationAlgorithmCollator;
+import com.hazelcast.machinelearning.mlalgorithm.MLAlgorithm;
+import com.hazelcast.machinelearning.mlalgorithm.combinerimpl.DistanceBasedClassificationAlgorithmCombinerFactory;
+import com.hazelcast.machinelearning.mlalgorithm.mapperimpl.DistanceBasedClassificationAlgorithmMapper;
+import com.hazelcast.machinelearning.mlalgorithm.reducerimpl.DistanceBasedClassificationAlgorithmReducerFactory;
+import com.hazelcast.machinelearning.mlcommon.*;
 import com.hazelcast.mapreduce.Job;
 import com.hazelcast.mapreduce.JobCompletableFuture;
 import com.hazelcast.mapreduce.JobTracker;

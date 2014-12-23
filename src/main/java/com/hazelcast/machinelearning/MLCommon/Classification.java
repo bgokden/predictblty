@@ -1,11 +1,10 @@
-package com.hazelcast.machinelearning.MLCommon;
+package com.hazelcast.machinelearning.mlcommon;
 
 import com.hazelcast.nio.ObjectDataInput;
 import com.hazelcast.nio.ObjectDataOutput;
 import com.hazelcast.nio.serialization.DataSerializable;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.Comparator;
 
 /**
