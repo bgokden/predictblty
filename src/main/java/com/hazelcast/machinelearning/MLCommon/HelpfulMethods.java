@@ -12,6 +12,9 @@ import java.util.Collection;
  * Created by berkgokden on 12/21/14.
  */
 public class HelpfulMethods {
+
+    private HelpfulMethods() {}
+
     /*
     * Build cluster method taken from hazelcast-mapreduce-presentation
     * */

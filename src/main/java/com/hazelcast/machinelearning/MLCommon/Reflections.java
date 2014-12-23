@@ -9,6 +9,9 @@ import java.lang.reflect.Field;
  * Created by berkgokden on 12/22/14.
  */
 public class Reflections {
+
+    private Reflections() {}
+
     public static ClassifiedFeature getClassifiedFeatureFromObject(Object obj) {
         if (obj == null) {
             return null;
@@ -40,7 +43,6 @@ public class Reflections {
                     }
                 }
             } catch (Exception e) {
-                //e.printStackTrace();
             }
         }
 
@@ -76,7 +78,6 @@ public class Reflections {
                     }
                 }
             } catch (Exception e) {
-                //e.printStackTrace();
             }
         }
 
