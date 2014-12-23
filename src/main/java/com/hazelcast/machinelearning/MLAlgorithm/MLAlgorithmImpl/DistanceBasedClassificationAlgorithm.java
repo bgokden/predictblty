@@ -29,7 +29,7 @@ public class DistanceBasedClassificationAlgorithm extends MLAlgorithm {
         super(hazelcastInstance, options);
         this.options.putIfAbsent("limit", 10);
         this.options.putIfAbsent("order", 1);
-        this.options.putIfAbsent("comparator", new FeatureComparators.DoubleFeatureComparator());
+        this.options.putIfAbsent("comparator", new FeatureComparators.DoubleEuclideanDistanceFeatureComparator());
     }
 
     public DistanceBasedClassificationAlgorithm(HazelcastInstance hazelcastInstance) {

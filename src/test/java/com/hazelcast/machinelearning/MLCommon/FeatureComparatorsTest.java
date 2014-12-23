@@ -8,7 +8,7 @@ public class FeatureComparatorsTest {
 
     @Test
     public void shouldPassWhenDistanceCalculatedAsExpected() throws Exception {
-        IFeatureComparator doubleFeatureComparator = new FeatureComparators.DoubleFeatureComparator();
+        IFeatureComparator doubleFeatureComparator = new FeatureComparators.DoubleEuclideanDistanceFeatureComparator();
         UnclassifiedFeature feature1 = new UnclassifiedFeature();
         ClassifiedFeature feature2 = new ClassifiedFeature();
 

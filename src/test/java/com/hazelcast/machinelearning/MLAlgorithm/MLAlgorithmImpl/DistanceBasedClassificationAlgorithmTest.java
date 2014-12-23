@@ -48,7 +48,9 @@ public class DistanceBasedClassificationAlgorithmTest {
                 }
             }
 
-            MLAlgorithm algorithm = new DistanceBasedClassificationAlgorithm(hazelcastInstance);
+            Map<String, Object> options = new HashMap<String, Object>();
+            options.put("comparator", new FeatureComparators.DoubleManhattanDistanceFeatureComparator());
+            MLAlgorithm algorithm = new DistanceBasedClassificationAlgorithm(hazelcastInstance, options);
             algorithm.train(plantsTrainData);
 
             int success = 0;
