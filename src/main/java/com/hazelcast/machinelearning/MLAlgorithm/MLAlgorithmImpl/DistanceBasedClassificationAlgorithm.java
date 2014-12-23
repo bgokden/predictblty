@@ -38,15 +38,16 @@ public class DistanceBasedClassificationAlgorithm extends MLAlgorithm {
 
 
     @Override
-    public void train(Collection<ClassifiedFeature> data) throws Exception {
+    public void train(Collection<? extends Object> data) throws Exception {
         this.trainingdata = getTrainingdata();
-        for (ClassifiedFeature classifiedFeature : data) {
+        for (Object object : data) {
+            ClassifiedFeature classifiedFeature = Reflections.getClassifiedFeatureFromObject(object);
             this.trainingdata.set(classifiedFeature.getFeatureMap(), classifiedFeature.getClassification());
         }
     }
 
     @Override
-    public Collection<Classification> predict(Collection<UnclassifiedFeature> data) throws Exception {
+    public Collection<Classification> predict(Collection<? extends Object> data) throws Exception {
         this.trainingdata = getTrainingdata();
         JobTracker jobTracker = hazelcastInstance.getJobTracker("default");
 

@@ -4,11 +4,13 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.HazelcastInstanceAware;
 import com.hazelcast.machinelearning.MLCommon.Classification;
 import com.hazelcast.machinelearning.MLCommon.IFeatureComparator;
+import com.hazelcast.machinelearning.MLCommon.Reflections;
 import com.hazelcast.machinelearning.MLCommon.UnclassifiedFeature;
 import com.hazelcast.mapreduce.Context;
 import com.hazelcast.mapreduce.Mapper;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
@@ -21,15 +23,17 @@ public class DistanceBasedClassificationAlgorithmMapper implements Mapper<Map<St
     private Collection<UnclassifiedFeature> data;
     private IFeatureComparator comparator;
 
-    public DistanceBasedClassificationAlgorithmMapper(Map<String, Object> options, Collection<UnclassifiedFeature> data) {
-        this.data = data;
+    public DistanceBasedClassificationAlgorithmMapper(Map<String, Object> options, Collection<? extends Object> data) {
+        this.data = new ArrayList<UnclassifiedFeature>(data.size());
+        for (Object object : data) {
+            this.data.add(Reflections.getUnclassifiedFeatureFromObject(object));
+        }
         this.comparator = (IFeatureComparator) options.get("comparator");
     }
 
     @Override
     public void map(Map<String, Serializable> key, Classification value, Context<Map<String, Serializable>, Classification> context) {
         for (UnclassifiedFeature unclassifiedFeature : this.data) {
-
             //double distance = unclassifiedFeature.getFeature().distanceTo(key);
             double distance = this.comparator.compare(unclassifiedFeature.getFeatureMap(), key);
             double weight = Double.MAX_VALUE;

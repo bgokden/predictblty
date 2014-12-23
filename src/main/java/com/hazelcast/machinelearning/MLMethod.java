@@ -14,6 +14,7 @@ import java.util.Map;
 /**
  * Created by berkgokden on 9/9/14.
  */
+@Deprecated
 public abstract class MLMethod implements HazelcastInstanceAware {
     protected transient HazelcastInstance hazelcastInstance;
     private Long dataId;

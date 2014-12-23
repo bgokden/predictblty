@@ -9,6 +9,7 @@ import com.hazelcast.machinelearning.annotations.FeatureInfo;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * Created by berkgokden on 12/21/14.
@@ -46,6 +47,17 @@ public class HelpfulMethods {
             hazelcastInstances[i] = Hazelcast.newHazelcastInstance(config);
         }
         return hazelcastInstances;
+    }
+
+    public static double compareClassificationsWithClass(Collection<Classification> classifications, String classification) {
+        double success = 0;
+        for (Classification classification1 : classifications) {
+            if (classification1.getClassification().equals(classification)) {
+                success = classification1.getConfidence();
+                break;
+            }
+        }
+        return success;
     }
 
 

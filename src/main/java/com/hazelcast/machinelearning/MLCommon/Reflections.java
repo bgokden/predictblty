@@ -47,4 +47,41 @@ public class Reflections {
 
         return classifiedFeature;
     }
+
+
+    public static UnclassifiedFeature getUnclassifiedFeatureFromObject(Object obj) {
+        if (obj == null) {
+            return null;
+        }
+
+        Class objClass = obj.getClass();
+        Field[] fields = objClass.getDeclaredFields();
+        UnclassifiedFeature unclassifiedFeature = new UnclassifiedFeature();
+        for (int i = 0; i < fields.length; i++) {
+            try {
+                FeatureInfo featureInfo = fields[i].getAnnotation(FeatureInfo.class);
+                if (featureInfo != null) {
+                    fields[i].setAccessible(true);
+                    if (featureInfo.featureType().equals(FeatureInfo.FeatureType.FEATURE)) {
+                        String name = null;
+                        if (featureInfo.name() != null && !featureInfo.name().trim().isEmpty()) {//not empty
+                            name = featureInfo.name();
+                        } else {
+                            name = fields[i].getName();
+                        }
+                        Serializable value = (Serializable) fields[i].get(obj);
+                        unclassifiedFeature.getFeatureMap().put(name, value);
+                    } else if (featureInfo.featureType().equals(FeatureInfo.FeatureType.COEFFICIENT)) {
+                        double value = (double) fields[i].get(obj);
+                        unclassifiedFeature.setConfidence(value);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                //
+            }
+        }
+
+        return unclassifiedFeature;
+    }
 }

@@ -8,6 +8,7 @@ import com.hazelcast.machinelearning.MLCommon.*;
 import com.hazelcast.machinelearning.csv.IrisPlantDataReader;
 import com.hazelcast.machinelearning.ToStringPrettyfier;
 import com.hazelcast.machinelearning.model.IrisPlant;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.InputStream;
@@ -21,14 +22,18 @@ public class DistanceBasedClassificationAlgorithmTest {
         // Prepare Hazelcast cluster
         HazelcastInstance hazelcastInstance = HelpfulMethods.buildCluster(4);
 
-        System.out.println("Clusters ready");
+        System.out.println("Cluster ready");
 
         try {
+            //Read data
             IrisPlantDataReader irisPlantDataReader = new IrisPlantDataReader();
             InputStream is = IrisPlantDataReader.class.getClassLoader().getResourceAsStream("bezdekIris.data");
             List<IrisPlant> irisPlants = irisPlantDataReader.read(is);
-            Collection<ClassifiedFeature> plantsTrainData = new LinkedList<ClassifiedFeature>();
-            Collection<UnclassifiedFeature> plantsPredictData = new LinkedList<UnclassifiedFeature>();
+
+            //Prepare training data and prediction data
+
+
+            //70% for training 30% for prediction
             int trainSize = (int) Math.round(0.7 * irisPlants.size());
             int predictSize = irisPlants.size() - trainSize;
             Set<Integer> predictDataIndex = new HashSet<Integer>();
@@ -36,53 +41,40 @@ public class DistanceBasedClassificationAlgorithmTest {
             for (int i = 0; i < predictSize; i++) {
                 while ( predictDataIndex.add(rd.nextInt(irisPlants.size())) == false) {}
             }
-
+            Collection<IrisPlant> plantsTrainData = new ArrayList<IrisPlant>(trainSize);
             for (int i = 0; i < irisPlants.size(); i++) {
                 if (!predictDataIndex.contains(i)) {
-                    plantsTrainData.add(Reflections.getClassifiedFeatureFromObject(irisPlants.get(i)));
+                    plantsTrainData.add(irisPlants.get(i));
                 }
             }
+
             MLAlgorithm algorithm = new DistanceBasedClassificationAlgorithm(hazelcastInstance);
             algorithm.train(plantsTrainData);
 
             int success = 0;
 
             for (Integer integer : predictDataIndex) {
-                ClassifiedFeature classifiedFeature = Reflections.getClassifiedFeatureFromObject(irisPlants.get(integer.intValue()));
-                //System.out.println("Class to predict: " + classifiedFeatureDatum.getClassification().toString());
-                UnclassifiedFeature unclassifiedFeature = new UnclassifiedFeature(classifiedFeature.getFeatureMap());
-                plantsPredictData.clear();
-                plantsPredictData.add(unclassifiedFeature);
+                IrisPlant irisPlantToPredict = irisPlants.get(integer.intValue());
+                Collection<IrisPlant> plantsPredictData = new ArrayList<IrisPlant>(1);
+                plantsPredictData.add(irisPlantToPredict);
                 Collection<Classification> classifications = algorithm.predict(plantsPredictData);
-                //System.out.println("Result: " + ToStringPrettyfier.toString(classifications));
-                boolean check = compareClassifications(classifiedFeature.getClassification(),classifications);
-                System.out.println("Result: " + check);
-                if (check == false) {
-                    System.out.println("Class to predict: " + classifiedFeature.getClassification().toString());
+                double successPartial = HelpfulMethods.compareClassificationsWithClass(classifications, irisPlantToPredict.getPlantClass());
+                System.out.println("Result: " + successPartial);
+                success+=successPartial;
+                if (successPartial == 0) {
+                    System.out.println("Class to predict: " + irisPlantToPredict.getPlantClass());
                     System.out.println("Result: " + ToStringPrettyfier.toString(classifications));
-                } else {
-                    success++;
                 }
-
-                //break; //testing one value
             }
             double successRate = ((double) success) / predictDataIndex.size();
             System.out.println("Success Rate: " + successRate);
-
+            Assert.assertTrue(successRate >= 0.6);
         } finally {
             // Shutdown cluster
             Hazelcast.shutdownAll();
         }
     }
 
-    private static boolean compareClassifications(Classification classification, Collection<Classification> classifications) {
-        for (Classification classification1 : classifications) {
-            if (classification1.getClassification().equals(classification.getClassification())) {
-                return true;
-            }
-            break;
-        }
-        return false;
-    }
+
 
 }

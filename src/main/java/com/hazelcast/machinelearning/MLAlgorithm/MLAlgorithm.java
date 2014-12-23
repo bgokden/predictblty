@@ -37,8 +37,8 @@ public abstract class MLAlgorithm implements HazelcastInstanceAware {
         }
     }
 
-    public abstract void  train(Collection<ClassifiedFeature> data) throws Exception;
-    public abstract Collection<Classification> predict(Collection<UnclassifiedFeature> data) throws Exception;
+    public abstract void  train(Collection<? extends Object> data) throws Exception;
+    public abstract Collection<Classification> predict(Collection<? extends Object> data) throws Exception;
 
     @Override
     public void setHazelcastInstance(HazelcastInstance hazelcastInstance) {
