@@ -74,12 +74,25 @@
                 <version>2.3.6</version>
                 <extensions>true</extensions>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>2.4</version>
+            </plugin>
         </plugins>
     </build>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--<sonar.branch>Dev_sonar.profile</sonar.branch>-->
+        <!--<sonar.projectKey>java-sonar-runner-simple</sonar.projectKey>-->
+        <!--<sonar.projectName>Simple Java project analyzed with the SonarQube Runner</sonar.projectName>-->
+        <!--<sonar.projectVersion>1.0</sonar.projectVersion>-->
+        <!--<sonar.sources>src</sonar.sources>-->
+        <!--<sonar.language>java</sonar.language>-->
+        <!--<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>-->
     </properties>
+
 
     <!--<repositories>-->
         <!--<repository>-->
