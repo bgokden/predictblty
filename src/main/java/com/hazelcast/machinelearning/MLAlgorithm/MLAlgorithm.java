@@ -22,6 +22,8 @@ public abstract class MLAlgorithm implements HazelcastInstanceAware {
     public MLAlgorithm() {
     }
 
+    //MLAlgorihtm is hazelcast aware but at some point hazelcast instance could be needed before
+    //MLAlgotithm is used in a hazelcast distiruted object so giving it in constructer solves a lot.
     public MLAlgorithm(HazelcastInstance hazelcastInstance, Map<String, Object> options) {
         this.hazelcastInstance = hazelcastInstance;
         this.options = options;
@@ -37,7 +39,10 @@ public abstract class MLAlgorithm implements HazelcastInstanceAware {
         }
     }
 
+    //implement this method to store training objects into a map or create models
     public abstract void  train(Collection<? extends Object> data) throws Exception;
+
+    //implement this method for prediction algorithm ( probably a map reduce solution)
     public abstract Collection<Classification> predict(Collection<? extends Object> data) throws Exception;
 
     @Override
@@ -49,6 +54,7 @@ public abstract class MLAlgorithm implements HazelcastInstanceAware {
         return hazelcastInstance;
     }
 
+    //A unique id for every MLAlgorithm instance used for map id, etc
     public Long getDataId() {
         if (this.dataId == null) {
             IdGenerator idGen = hazelcastInstance.getIdGenerator("dataId");
@@ -57,6 +63,7 @@ public abstract class MLAlgorithm implements HazelcastInstanceAware {
         return this.dataId;
     }
 
+    //If you want to use any existing datasource you should set DataId before training or predicting
     public void setDataId(Long dataId) {
         this.dataId = dataId;
     }
@@ -65,6 +72,7 @@ public abstract class MLAlgorithm implements HazelcastInstanceAware {
         return options;
     }
 
+    //set Options does not work well after initilization so don't use it
     public void setOptions(Map<String, Object> options) {
         this.options = options;
     }
