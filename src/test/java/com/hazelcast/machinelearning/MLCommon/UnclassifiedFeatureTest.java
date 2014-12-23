@@ -16,7 +16,7 @@ public class UnclassifiedFeatureTest {
             HazelcastInstance[] hz = HelpfulMethods.buildClusterReturnCluster(2);
 
             Map<String, UnclassifiedFeature> map = hz[0].getMap("map");
-            ConcurrentHashMap<String, Serializable> f = new ConcurrentHashMap<String, Serializable>();
+            Map<String, Serializable> f = new ConcurrentHashMap<String, Serializable>();
             f.put("n1", 1.0D);
             f.put("n2", 2.0D);
             f.put("n3", 3.0D);

@@ -6,6 +6,7 @@ import com.hazelcast.nio.serialization.DataSerializable;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -14,19 +15,19 @@ import java.util.concurrent.ConcurrentHashMap;
 public class UnclassifiedFeature implements DataSerializable, Serializable {
     private static final long serialVersionUID = 1L;
     protected double confidence;
-    protected ConcurrentHashMap<String, Serializable> featureMap;
+    protected Map<String, Serializable> featureMap;
 
     public UnclassifiedFeature() {
         this.featureMap = new ConcurrentHashMap<String, Serializable>();
         this.confidence = 1.0;
     }
 
-    public UnclassifiedFeature(ConcurrentHashMap<String, Serializable> feature) {
+    public UnclassifiedFeature(Map<String, Serializable> feature) {
         this.featureMap = feature;
         this.confidence = 1.0;
     }
 
-    public UnclassifiedFeature(ConcurrentHashMap<String, Serializable> feature, double confidence) {
+    public UnclassifiedFeature(Map<String, Serializable> feature, double confidence) {
         this.featureMap = feature;
         this.confidence = confidence;
     }
@@ -53,11 +54,11 @@ public class UnclassifiedFeature implements DataSerializable, Serializable {
         this.confidence = in.readDouble();
     }
 
-    public ConcurrentHashMap<String, Serializable> getFeatureMap() {
+    public Map<String, Serializable> getFeatureMap() {
         return featureMap;
     }
 
-    public void setFeatureMap(ConcurrentHashMap<String, Serializable> featureMap) {
+    public void setFeatureMap(Map<String, Serializable> featureMap) {
         this.featureMap = featureMap;
     }
 }
