@@ -11,7 +11,7 @@ public class InvertedCollator implements Collator<Map.Entry<String, Double>, Lis
 
     @Override
     public List<KeyValueTuple> collate(Iterable<Map.Entry<String, Double>> values) {
-        List<KeyValueTuple> result = new ArrayList<>();
+        List<KeyValueTuple> result = new ArrayList<KeyValueTuple>();
         for (Map.Entry<String, Double> value : values) {
             result.add(new KeyValueTuple(value.getKey(), value.getValue()));
         }

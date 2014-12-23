@@ -25,7 +25,8 @@ public class IrisPlantDataReader implements DataReader<IrisPlant> {
             throws Exception {
 
         List<IrisPlant> elements = new LinkedList<IrisPlant>();
-        try (ICsvListReader reader = new CsvListReader(new InputStreamReader(is), CsvPreference.STANDARD_PREFERENCE /*CsvPreference.EXCEL_PREFERENCE*/)) {
+        try {
+            ICsvListReader reader = new CsvListReader(new InputStreamReader(is), CsvPreference.STANDARD_PREFERENCE /*CsvPreference.EXCEL_PREFERENCE*/);
             String[] tokens = reader.getHeader(true);
             elements.add(readIrisPlant(tokens));
 
@@ -35,7 +36,7 @@ public class IrisPlantDataReader implements DataReader<IrisPlant> {
 
                 elements.add(readIrisPlant(tokens));
             }
-        }
+        } catch (Exception e) {}
         return elements;
     }
 

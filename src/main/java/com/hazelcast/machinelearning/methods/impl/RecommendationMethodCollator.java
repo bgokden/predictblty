@@ -10,7 +10,7 @@ import java.util.*;
 public class RecommendationMethodCollator implements Collator<Map.Entry<Feature, Double>, List<Classification>> {
     @Override
     public List<Classification> collate(Iterable<Map.Entry<Feature, Double>> values) {
-        List<Classification> result = new ArrayList<>();
+        List<Classification> result = new ArrayList<Classification>();
         double sum = 0;
         for (Map.Entry<Feature, Double> value : values) {
             sum += value.getValue();

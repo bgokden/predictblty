@@ -35,13 +35,12 @@ public class Reflections {
                         String value = (String) fields[i].get(obj);
                         classifiedFeature.getClassification().setClassification(value);
                     } else if (featureInfo.featureType().equals(FeatureInfo.FeatureType.COEFFICIENT)) {
-                        double value = (double) fields[i].get(obj);
+                        double value = (Double) fields[i].get(obj);
                         classifiedFeature.getClassification().setConfidence(value);
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
-                //
+                //e.printStackTrace();
             }
         }
 
@@ -72,13 +71,12 @@ public class Reflections {
                         Serializable value = (Serializable) fields[i].get(obj);
                         unclassifiedFeature.getFeatureMap().put(name, value);
                     } else if (featureInfo.featureType().equals(FeatureInfo.FeatureType.COEFFICIENT)) {
-                        double value = (double) fields[i].get(obj);
+                        double value = (Double) fields[i].get(obj);
                         unclassifiedFeature.setConfidence(value);
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
-                //
+                //e.printStackTrace();
             }
         }
 
