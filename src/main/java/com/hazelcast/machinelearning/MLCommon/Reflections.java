@@ -36,7 +36,7 @@ public class Reflections {
                         Serializable value = (Serializable) fields[i].get(obj);
                         classifiedFeature.getFeatureMap().put(name, value);
                     } else if (featureInfo.featureType().equals(FeatureInfo.FeatureType.CLASSIFICATION)) {
-                        String value = (String) fields[i].get(obj);
+                        Serializable value = (Serializable) fields[i].get(obj);
                         classifiedFeature.getClassification().setClassification(value);
                     } else if (featureInfo.featureType().equals(FeatureInfo.FeatureType.COEFFICIENT)) {
                         double value = (Double) fields[i].get(obj);

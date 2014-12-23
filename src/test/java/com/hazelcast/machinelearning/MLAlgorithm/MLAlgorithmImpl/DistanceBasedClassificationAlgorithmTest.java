@@ -63,7 +63,7 @@ public class DistanceBasedClassificationAlgorithmTest {
                 double successPartial = HelpfulMethods.compareClassificationsWithClass(classifications, irisPlantToPredict.getPlantClass());
                 System.out.println("Result: " + successPartial);
                 success+=successPartial;
-                if (successPartial == 0) {
+                if (successPartial <= 0.5) {
                     System.out.println("Class to predict: " + irisPlantToPredict.getPlantClass());
                     System.out.println("Result: " + ToStringPrettyfier.toString(classifications));
                 }

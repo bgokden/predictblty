@@ -20,7 +20,7 @@ public class DistanceBasedClassificationAlgorithmCollator implements Collator<Ma
     @Override
     public List<Classification> collate(Iterable<Map.Entry<Map<String, Serializable>, List<Classification>>> values) {
         //System.out.println("Collate :");
-        Map<Comparable, Classification> classificationMap = new HashMap<Comparable, Classification>();
+        Map<Serializable, Classification> classificationMap = new HashMap<Serializable, Classification>();
         double coefficient = 0;
         Classification temp = null;
         for (Map.Entry<Map<String, Serializable>, List<Classification>> value : values) {

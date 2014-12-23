@@ -5,6 +5,7 @@ import com.hazelcast.nio.ObjectDataOutput;
 import com.hazelcast.nio.serialization.DataSerializable;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -12,14 +13,14 @@ import java.util.Comparator;
  */
 public class Classification implements DataSerializable {
     private double confidence;
-    private String classification;//I wanted to define it as an object but serialization could have issues with it
+    private Serializable classification;//I wanted to define it as an object but serialization could have issues with it
 
-    public Classification(String classification, double confidence) {
+    public Classification(Serializable classification, double confidence) {
         this.classification = classification;
         this.confidence = confidence;
     }
 
-    public Classification(String classification, Double confidence) {
+    public Classification(Serializable classification, Double confidence) {
         this.classification = classification;
         if (confidence == null) {
             this.confidence = 1.0;
@@ -45,11 +46,11 @@ public class Classification implements DataSerializable {
         this.confidence = confidence;
     }
 
-    public String getClassification() {
+    public Serializable getClassification() {
         return classification;
     }
 
-    public void setClassification(String classification) {
+    public void setClassification(Serializable classification) {
         this.classification = classification;
     }
 
@@ -59,13 +60,13 @@ public class Classification implements DataSerializable {
 
     @Override
     public void writeData(ObjectDataOutput out) throws IOException {
-        out.writeUTF(this.classification);
+        out.writeObject(this.classification);
         out.writeDouble(this.confidence);
     }
 
     @Override
     public void readData(ObjectDataInput in) throws IOException {
-        this.classification = in.readUTF();
+        this.classification = in.readObject();
         this.confidence = in.readDouble();
     }
 
