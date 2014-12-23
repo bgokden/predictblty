@@ -13,7 +13,8 @@ import java.util.Collection;
  */
 public class HelpfulMethods {
 
-    private HelpfulMethods() {}
+    private HelpfulMethods() {
+    }
 
     /*
     * Build cluster method taken from hazelcast-mapreduce-presentation

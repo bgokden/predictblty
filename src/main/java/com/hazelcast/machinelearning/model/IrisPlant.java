@@ -7,7 +7,6 @@ import com.hazelcast.machinelearning.annotations.FeatureInfo.FeatureType;
  * Created by berkgokden on 9/20/14.
  */
 public class IrisPlant {
-    public IrisPlant() {}
 
     @FeatureInfo
     private double sepalLength;// in cm
@@ -22,6 +21,9 @@ public class IrisPlant {
     // -- Iris Setosa
     // -- Iris Versicolour
     // -- Iris Virginica
+
+    public IrisPlant() {
+    }
 
     public double getSepalLength() {
         return sepalLength;

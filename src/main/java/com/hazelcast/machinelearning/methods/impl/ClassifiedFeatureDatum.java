@@ -9,7 +9,8 @@ public class ClassifiedFeatureDatum {
     protected Classification classification;
     protected Feature feature;
 
-    public ClassifiedFeatureDatum() {}
+    public ClassifiedFeatureDatum() {
+    }
 
     public ClassifiedFeatureDatum(Feature feature, Classification classification) {
         this.feature = feature;

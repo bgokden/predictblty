@@ -56,7 +56,9 @@ public abstract class AbstractDataReader<T>
             while ((element = reader.read(type, headers, cellProcessors)) != null) {
                 elements.add(element);
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            throw e;
+        }
         return elements;
     }
 

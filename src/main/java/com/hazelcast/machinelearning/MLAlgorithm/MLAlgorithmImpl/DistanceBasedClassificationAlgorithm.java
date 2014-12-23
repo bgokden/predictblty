@@ -24,12 +24,20 @@ import java.util.Map;
 public class DistanceBasedClassificationAlgorithm extends MLAlgorithm {
 
     private IMap<Map<String, Serializable>, Classification> trainingdata;
+    private static final int LIMIT = 10;
+    private static final int DESC = 1;
 
     public DistanceBasedClassificationAlgorithm(HazelcastInstance hazelcastInstance, Map<String, Object> options) {
         super(hazelcastInstance, options);
-        if (!this.options.containsKey("limit")) this.options.put("limit", 10);
-        if (!this.options.containsKey("order")) this.options.put("order", 1);
-        if (!this.options.containsKey("comparator")) this.options.put("comparator", new FeatureComparators.DoubleEuclideanDistanceFeatureComparator());
+        if (!this.options.containsKey("limit")) {
+            this.options.put("limit", LIMIT);
+        }
+        if (!this.options.containsKey("order")) {
+            this.options.put("order", DESC);
+        }
+        if (!this.options.containsKey("comparator")) {
+            this.options.put("comparator", new FeatureComparators.DoubleEuclideanDistanceFeatureComparator());
+        }
     }
 
     public DistanceBasedClassificationAlgorithm(HazelcastInstance hazelcastInstance) {

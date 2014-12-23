@@ -13,7 +13,8 @@ public class FeatureConfidenceTuple implements DataSerializable {
     private Feature feature;
     private double confidenceCoefficient;
 
-    public FeatureConfidenceTuple(){}
+    public FeatureConfidenceTuple(){
+    }
 
     //TODO this is created just for compatibility
     public FeatureConfidenceTuple(Comparable feature, double confidenceCoefficient) {
@@ -56,13 +57,11 @@ public class FeatureConfidenceTuple implements DataSerializable {
 
     @Override
     public int hashCode() {
-        System.out.println("hashCode run");
         return this.feature.hashCode();
     }
 
     @Override
     public boolean equals(Object other) {
-        System.out.println("Equals run");
         if (other == null) {
             return false;
         }

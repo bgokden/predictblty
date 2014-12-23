@@ -7,12 +7,15 @@ import java.util.Map;
  * Created by berkgokden on 12/21/14.
  */
 public class FeatureComparators {
+
+    private FeatureComparators() {
+    }
+
     public static class DoubleEuclideanDistanceFeatureComparator implements IFeatureComparator {
         @Override
         public double compare(Map<String, Serializable> o1, Map<String, Serializable> o2) {
             double sum = 0;
-            for (Map.Entry<String, Serializable> entry : o1.entrySet())
-            {
+            for (Map.Entry<String, Serializable> entry : o1.entrySet()) {
                 try {
                     Double value1 = (Double) entry.getValue();
                     Double value2 = (Double) o2.get(entry.getKey());
@@ -29,8 +32,7 @@ public class FeatureComparators {
         @Override
         public double compare(Map<String, Serializable> o1, Map<String, Serializable> o2) {
             double sum = 0;
-            for (Map.Entry<String, Serializable> entry : o1.entrySet())
-            {
+            for (Map.Entry<String, Serializable> entry : o1.entrySet()) {
                 try {
                     Double value1 = (Double) entry.getValue();
                     Double value2 = (Double) o2.get(entry.getKey());

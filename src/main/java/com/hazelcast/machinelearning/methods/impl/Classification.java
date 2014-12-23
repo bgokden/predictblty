@@ -15,7 +15,8 @@ public class Classification implements DataSerializable{
     private double confidenceCoefficient;
     private Comparable comparableClassification;
 
-    public Classification() {}
+    public Classification() {
+    }
 
     public Classification(Comparable comparableClassification, Double confidenceCoefficient) {
         this.comparableClassification = comparableClassification;

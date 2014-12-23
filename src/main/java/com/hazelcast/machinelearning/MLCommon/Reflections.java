@@ -10,7 +10,8 @@ import java.lang.reflect.Field;
  */
 public class Reflections {
 
-    private Reflections() {}
+    private Reflections() {
+    }
 
     public static ClassifiedFeature getClassifiedFeatureFromObject(Object obj) {
         if (obj == null) {
