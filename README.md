@@ -13,3 +13,5 @@ I am planning to support most of the methods supported by Apache Mahout.
 [Apache Mahout Algorithms](https://mahout.apache.org/users/basics/algorithms.html)
 
 NOTE: There was an issue with serialization I have fixed it and changed the way how my api works.
+
+If you have any questions or problem just email me ( berkgokden@gmail.com )
