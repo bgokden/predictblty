@@ -1,4 +1,4 @@
-Machine Learning On Hazelcast
+Predictblty: A Machine Learning Library Based On Hazelcast
 =============================
 
 Simple Machine Learning implementations on Hazelcast MapReduce API
