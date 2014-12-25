@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.hazelcast.machinelearning</groupId>
-    <artifactId>machine-learning-on-hazelcast</artifactId>
+    <artifactId>predictblty</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
