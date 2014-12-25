@@ -18,6 +18,10 @@ public class Reflections {
             return null;
         }
 
+        if (obj instanceof ClassifiedFeature) {
+            return ((ClassifiedFeature) obj);
+        }
+
         Class objClass = obj.getClass();
         Field[] fields = objClass.getDeclaredFields();
         ClassifiedFeature classifiedFeature = new ClassifiedFeature();
@@ -54,6 +58,10 @@ public class Reflections {
     public static UnclassifiedFeature getUnclassifiedFeatureFromObject(Object obj) {
         if (obj == null) {
             return null;
+        }
+
+        if (obj instanceof UnclassifiedFeature) {
+            return ((UnclassifiedFeature) obj);
         }
 
         Class objClass = obj.getClass();
