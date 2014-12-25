@@ -5,7 +5,7 @@ Simple Machine Learning implementations on Hazelcast MapReduce API
 
 ML API is in its early days right now and it only supports kNN.
 
-I have added a way add you own objects with using annotations and adding distance calculation method.
+I have added a way add your own objects with using annotations and adding distance calculation method.
 
 Recommendation Method based on co-occurence matrix is next in line to be supported.
 
