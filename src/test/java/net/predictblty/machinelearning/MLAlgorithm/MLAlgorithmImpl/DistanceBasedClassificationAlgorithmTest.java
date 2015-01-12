@@ -1,12 +1,12 @@
-package net.predictblty.machinelearning.MLAlgorithm.MLAlgorithmImpl;
+package net.predictblty.machinelearning.mlalgorithm.mlalgorithmimpl;
 
 
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
-import net.predictblty.machinelearning.MLAlgorithm.MLAlgorithm;
-import net.predictblty.machinelearning.MLCommon.Classification;
-import net.predictblty.machinelearning.MLCommon.FeatureComparators;
-import net.predictblty.machinelearning.MLCommon.HelpfulMethods;
+import net.predictblty.machinelearning.mlalgorithm.MLAlgorithm;
+import net.predictblty.machinelearning.mlcommon.Classification;
+import net.predictblty.machinelearning.mlcommon.FeatureComparators;
+import net.predictblty.machinelearning.mlcommon.HelpfulMethods;
 import net.predictblty.machinelearning.csv.IrisPlantDataReader;
 import net.predictblty.machinelearning.ToStringPrettyfier;
 import net.predictblty.machinelearning.model.IrisPlant;

@@ -1,6 +1,6 @@
-package net.predictblty.machinelearning.MLAlgorithm.ReducerImpl;
+package net.predictblty.machinelearning.mlalgorithm.reducerimpl;
 
-import net.predictblty.machinelearning.MLCommon.Classification;
+import net.predictblty.machinelearning.mlcommon.Classification;
 import com.hazelcast.mapreduce.Reducer;
 import com.hazelcast.mapreduce.ReducerFactory;
 

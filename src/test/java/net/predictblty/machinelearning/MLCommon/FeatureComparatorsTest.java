@@ -1,4 +1,4 @@
-package net.predictblty.machinelearning.MLCommon;
+package net.predictblty.machinelearning.mlcommon;
 
 import org.junit.Test;
 

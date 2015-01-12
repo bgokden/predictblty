@@ -1,7 +1,5 @@
-package net.predictblty.machinelearning.MLCommon;
+package net.predictblty.machinelearning.mlcommon;
 
-import net.predictblty.machinelearning.annotations.FeatureInfo;
-import net.predictblty.machinelearning.annotations.FeatureInfo;
 import net.predictblty.machinelearning.annotations.FeatureInfo;
 
 import java.io.Serializable;

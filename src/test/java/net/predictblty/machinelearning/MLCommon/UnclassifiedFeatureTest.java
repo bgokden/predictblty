@@ -1,4 +1,4 @@
-package net.predictblty.machinelearning.MLCommon;
+package net.predictblty.machinelearning.mlcommon;
 
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;

@@ -1,6 +1,6 @@
-package net.predictblty.machinelearning.MLAlgorithm.CollatorImpl;
+package net.predictblty.machinelearning.mlalgorithm.collatorimpl;
 
-import net.predictblty.machinelearning.MLCommon.Classification;
+import net.predictblty.machinelearning.mlcommon.Classification;
 import com.hazelcast.mapreduce.Collator;
 
 import java.io.Serializable;

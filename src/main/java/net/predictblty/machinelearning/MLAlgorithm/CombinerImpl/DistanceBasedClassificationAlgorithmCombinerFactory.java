@@ -1,6 +1,6 @@
-package net.predictblty.machinelearning.MLAlgorithm.CombinerImpl;
+package net.predictblty.machinelearning.mlalgorithm.combinerimpl;
 
-import net.predictblty.machinelearning.MLCommon.Classification;
+import net.predictblty.machinelearning.mlcommon.Classification;
 import com.hazelcast.mapreduce.Combiner;
 import com.hazelcast.mapreduce.CombinerFactory;
 

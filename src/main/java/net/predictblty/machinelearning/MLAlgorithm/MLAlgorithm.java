@@ -1,11 +1,9 @@
-package net.predictblty.machinelearning.MLAlgorithm;
+package net.predictblty.machinelearning.mlalgorithm;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.HazelcastInstanceAware;
 import com.hazelcast.core.IdGenerator;
-import net.predictblty.machinelearning.MLCommon.Classification;
-import net.predictblty.machinelearning.MLCommon.Classification;
-import net.predictblty.machinelearning.MLCommon.Classification;
+import net.predictblty.machinelearning.mlcommon.Classification;
 
 import java.util.Collection;
 import java.util.HashMap;

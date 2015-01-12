@@ -1,4 +1,4 @@
-package net.predictblty.machinelearning.MLAlgorithm.MLAlgorithmImpl;
+package net.predictblty.machinelearning.mlalgorithm.mlalgorithmimpl;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
@@ -6,17 +6,15 @@ import com.hazelcast.mapreduce.Job;
 import com.hazelcast.mapreduce.JobCompletableFuture;
 import com.hazelcast.mapreduce.JobTracker;
 import com.hazelcast.mapreduce.KeyValueSource;
-import net.predictblty.machinelearning.MLAlgorithm.CollatorImpl.DistanceBasedClassificationAlgorithmCollator;
-import net.predictblty.machinelearning.MLAlgorithm.CombinerImpl.DistanceBasedClassificationAlgorithmCombinerFactory;
-import net.predictblty.machinelearning.MLAlgorithm.MLAlgorithm;
-import net.predictblty.machinelearning.MLAlgorithm.MapperImpl.DistanceBasedClassificationAlgorithmMapper;
-import net.predictblty.machinelearning.MLAlgorithm.ReducerImpl.DistanceBasedClassificationAlgorithmReducerFactory;
-import net.predictblty.machinelearning.MLCommon.Classification;
-import net.predictblty.machinelearning.MLCommon.ClassifiedFeature;
-import net.predictblty.machinelearning.MLCommon.FeatureComparators;
-import net.predictblty.machinelearning.MLCommon.Reflections;
-import net.predictblty.machinelearning.MLAlgorithm.CollatorImpl.DistanceBasedClassificationAlgorithmCollator;
-import net.predictblty.machinelearning.MLAlgorithm.ReducerImpl.DistanceBasedClassificationAlgorithmReducerFactory;
+import net.predictblty.machinelearning.mlalgorithm.collatorimpl.DistanceBasedClassificationAlgorithmCollator;
+import net.predictblty.machinelearning.mlalgorithm.combinerimpl.DistanceBasedClassificationAlgorithmCombinerFactory;
+import net.predictblty.machinelearning.mlalgorithm.MLAlgorithm;
+import net.predictblty.machinelearning.mlalgorithm.mapperImpl.DistanceBasedClassificationAlgorithmMapper;
+import net.predictblty.machinelearning.mlalgorithm.reducerimpl.DistanceBasedClassificationAlgorithmReducerFactory;
+import net.predictblty.machinelearning.mlcommon.Classification;
+import net.predictblty.machinelearning.mlcommon.ClassifiedFeature;
+import net.predictblty.machinelearning.mlcommon.FeatureComparators;
+import net.predictblty.machinelearning.mlcommon.Reflections;
 
 import java.io.Serializable;
 import java.util.Collection;

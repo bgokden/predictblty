@@ -1,21 +1,13 @@
-package net.predictblty.machinelearning.MLAlgorithm.MapperImpl;
+package net.predictblty.machinelearning.mlalgorithm.mapperImpl;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.HazelcastInstanceAware;
-import net.predictblty.machinelearning.MLCommon.Classification;
-import net.predictblty.machinelearning.MLCommon.IFeatureComparator;
-import net.predictblty.machinelearning.MLCommon.Reflections;
-import net.predictblty.machinelearning.MLCommon.UnclassifiedFeature;
+import net.predictblty.machinelearning.mlcommon.Classification;
+import net.predictblty.machinelearning.mlcommon.IFeatureComparator;
+import net.predictblty.machinelearning.mlcommon.Reflections;
+import net.predictblty.machinelearning.mlcommon.UnclassifiedFeature;
 import com.hazelcast.mapreduce.Context;
 import com.hazelcast.mapreduce.Mapper;
-import net.predictblty.machinelearning.MLCommon.Classification;
-import net.predictblty.machinelearning.MLCommon.IFeatureComparator;
-import net.predictblty.machinelearning.MLCommon.Reflections;
-import net.predictblty.machinelearning.MLCommon.UnclassifiedFeature;
-import net.predictblty.machinelearning.MLCommon.Classification;
-import net.predictblty.machinelearning.MLCommon.IFeatureComparator;
-import net.predictblty.machinelearning.MLCommon.Reflections;
-import net.predictblty.machinelearning.MLCommon.UnclassifiedFeature;
 
 import java.io.Serializable;
 import java.util.ArrayList;
