@@ -22,6 +22,11 @@ public class Preference {
         this.prefenceCoefficient = prefenceCoefficient;
     }
 
+    public Preference(String preferenceKey,Double prefenceCoefficient) {
+        this.preferenceKey = preferenceKey;
+        this.prefenceCoefficient = prefenceCoefficient;
+    }
+
     public String getPreferenceKey() {
         return preferenceKey;
     }

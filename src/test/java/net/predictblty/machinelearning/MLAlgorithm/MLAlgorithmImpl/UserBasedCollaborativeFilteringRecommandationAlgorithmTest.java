@@ -84,4 +84,42 @@ public class UserBasedCollaborativeFilteringRecommandationAlgorithmTest {
         }
     }
 
+
+    @Test
+    public void shouldPassWhenSuccessIsHighSimple() throws Exception {
+        Hazelcast.shutdownAll();
+        // Prepare Hazelcast cluster
+        HazelcastInstance hazelcastInstance = HelpfulMethods.buildCluster(1);
+
+        System.out.println("Cluster ready");
+
+        try {
+
+
+            Map<String, Object> options = new HashMap<String, Object>();
+            options.put("comparator", new FeatureComparators.DoubleManhattanDistanceFeatureComparator());
+            MLAlgorithm algorithm = new UserBasedCollaborativeFilteringRecommandationAlgorithm(hazelcastInstance, options);
+            Collection<Preference> trainData = new LinkedList<Preference>();
+            trainData.add(new Preference("A","B", 1.0));
+            trainData.add(new Preference("A","C", 1.0));
+            trainData.add(new Preference("A","B", 3.0));
+            trainData.add(new Preference("D","B", 0.5));
+
+            algorithm.train(trainData);
+
+
+            Collection<Preference> predictData = new LinkedList<Preference>();
+            predictData.add(new Preference("B", 1.0));
+            Collection<Classification> classifications = algorithm.predict(predictData);
+
+            System.out.println(ToStringPrettyfier.toString(classifications));
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            // Shutdown cluster
+            Hazelcast.shutdownAll();
+        }
+    }
+
 }

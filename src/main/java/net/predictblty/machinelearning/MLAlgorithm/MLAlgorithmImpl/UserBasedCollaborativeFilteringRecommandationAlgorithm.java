@@ -101,6 +101,7 @@ public class UserBasedCollaborativeFilteringRecommandationAlgorithm extends MLAl
                 double oldValue = entry.getValue().getClassification().getConfidence();
                 double newValue = oldValue + value.getClassification().getConfidence();
                 entry.getValue().getClassification().setConfidence(newValue);
+                entry.setValue(entry.getValue());
             }
             return null;
         }
