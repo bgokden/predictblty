@@ -55,7 +55,7 @@ public class Classification implements DataSerializable {
     }
 
     public String toString() {
-        return this.classification.toString()+" "+this.confidence;
+        return String.valueOf(this.classification)+" "+this.confidence;
     }
 
     @Override
