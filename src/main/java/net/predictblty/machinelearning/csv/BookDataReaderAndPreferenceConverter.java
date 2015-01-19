@@ -90,6 +90,9 @@ public class BookDataReaderAndPreferenceConverter implements DataReader<Preferen
                     }
                     Preference preference = preferenceMap.get(key);
                     if (preference == null) {
+                        if (firstValue == null || stringDoubleInnerEntry.getValue() == null || Double.isNaN(firstValue) || Double.isNaN(stringDoubleInnerEntry.getValue())) {
+                            System.out.println(firstValue+" , "+stringDoubleInnerEntry.getValue());
+                        }
                         preference = new Preference(firstKey, secondKey, firstValue*stringDoubleInnerEntry.getValue());
                     }
                     preferenceMap.put(key, preference);
