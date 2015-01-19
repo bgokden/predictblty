@@ -1,4 +1,4 @@
-package net.predictblty.machinelearning.mlalgorithm.mapperImpl;
+package net.predictblty.machinelearning.mlalgorithm.mapperimpl;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.HazelcastInstanceAware;

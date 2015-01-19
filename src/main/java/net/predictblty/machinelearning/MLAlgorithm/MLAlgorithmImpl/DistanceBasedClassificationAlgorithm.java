@@ -9,7 +9,7 @@ import com.hazelcast.mapreduce.KeyValueSource;
 import net.predictblty.machinelearning.mlalgorithm.collatorimpl.DistanceBasedClassificationAlgorithmCollator;
 import net.predictblty.machinelearning.mlalgorithm.combinerimpl.DistanceBasedClassificationAlgorithmCombinerFactory;
 import net.predictblty.machinelearning.mlalgorithm.MLAlgorithm;
-import net.predictblty.machinelearning.mlalgorithm.mapperImpl.DistanceBasedClassificationAlgorithmMapper;
+import net.predictblty.machinelearning.mlalgorithm.mapperimpl.DistanceBasedClassificationAlgorithmMapper;
 import net.predictblty.machinelearning.mlalgorithm.reducerimpl.DistanceBasedClassificationAlgorithmReducerFactory;
 import net.predictblty.machinelearning.mlcommon.Classification;
 import net.predictblty.machinelearning.mlcommon.ClassifiedFeature;

@@ -1,4 +1,4 @@
-package net.predictblty.machinelearning.mlalgorithm.mapperImpl;
+package net.predictblty.machinelearning.mlalgorithm.mapperimpl;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.HazelcastInstanceAware;
@@ -13,13 +13,13 @@ import java.util.*;
 /**
  * Created by berkgokden on 1/12/15.
  */
-public class UserBasedCollaborativeFilteringRecommandationAlgorithmMapper implements Mapper<ByteHolder, ClassifiedFeature, Map<String, Serializable>, Classification>, HazelcastInstanceAware {
+public class UserBasedCollaborativeFilteringRecommendationAlgorithmMapper implements Mapper<ByteHolder, ClassifiedFeature, Map<String, Serializable>, Classification>, HazelcastInstanceAware {
 
     private transient HazelcastInstance hazelcastInstance;
     private Collection<UnclassifiedFeature> data;
     private IFeatureComparator comparator;
 
-    public UserBasedCollaborativeFilteringRecommandationAlgorithmMapper(Map<String, Object> options, Collection<? extends Object> data) {
+    public UserBasedCollaborativeFilteringRecommendationAlgorithmMapper(Map<String, Object> options, Collection<? extends Object> data) {
         this.data = new ArrayList<UnclassifiedFeature>(data.size());
         for (Object object : data) {
             this.data.add(Reflections.getUnclassifiedFeatureFromObject(object));

@@ -10,7 +10,7 @@ import com.hazelcast.mapreduce.KeyValueSource;
 import net.predictblty.machinelearning.mlalgorithm.MLAlgorithm;
 import net.predictblty.machinelearning.mlalgorithm.collatorimpl.DistanceBasedClassificationAlgorithmCollator;
 import net.predictblty.machinelearning.mlalgorithm.combinerimpl.DistanceBasedClassificationAlgorithmCombinerFactory;
-import net.predictblty.machinelearning.mlalgorithm.mapperImpl.UserBasedCollaborativeFilteringRecommandationAlgorithmMapper;
+import net.predictblty.machinelearning.mlalgorithm.mapperimpl.UserBasedCollaborativeFilteringRecommendationAlgorithmMapper;
 import net.predictblty.machinelearning.mlalgorithm.reducerimpl.DistanceBasedClassificationAlgorithmReducerFactory;
 import net.predictblty.machinelearning.mlcommon.*;
 
@@ -21,12 +21,12 @@ import java.util.Map;
 /**
  * Created by berkgokden on 1/12/15.
  */
-public class UserBasedCollaborativeFilteringRecommandationAlgorithm extends MLAlgorithm {
+public class UserBasedCollaborativeFilteringRecommendationAlgorithm extends MLAlgorithm {
     private IMap<ByteHolder, ClassifiedFeature> trainingdata;
     private static final int LIMIT = 10;
     private static final int DESC = 1;
 
-    public UserBasedCollaborativeFilteringRecommandationAlgorithm(HazelcastInstance hazelcastInstance, Map<String, Object> options) {
+    public UserBasedCollaborativeFilteringRecommendationAlgorithm(HazelcastInstance hazelcastInstance, Map<String, Object> options) {
         super(hazelcastInstance, options);
         if (!this.options.containsKey("limit")) {
             this.options.put("limit", LIMIT);
@@ -39,7 +39,7 @@ public class UserBasedCollaborativeFilteringRecommandationAlgorithm extends MLAl
         }
     }
 
-    public UserBasedCollaborativeFilteringRecommandationAlgorithm(HazelcastInstance hazelcastInstance) {
+    public UserBasedCollaborativeFilteringRecommendationAlgorithm(HazelcastInstance hazelcastInstance) {
         this(hazelcastInstance, null);
     }
 
@@ -65,7 +65,7 @@ public class UserBasedCollaborativeFilteringRecommandationAlgorithm extends MLAl
         Job<ByteHolder, ClassifiedFeature> job = jobTracker.newJob(source);
 //
         JobCompletableFuture<List<Classification>> future = job //
-                .mapper(new UserBasedCollaborativeFilteringRecommandationAlgorithmMapper(this.options,data)) //
+                .mapper(new UserBasedCollaborativeFilteringRecommendationAlgorithmMapper(this.options,data)) //
                 .combiner(new DistanceBasedClassificationAlgorithmCombinerFactory(this.options)) //
                 .reducer(new DistanceBasedClassificationAlgorithmReducerFactory(this.options)) //
                 .submit(new DistanceBasedClassificationAlgorithmCollator(this.options));

@@ -4,23 +4,17 @@ import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import net.predictblty.machinelearning.ToStringPrettyfier;
 import net.predictblty.machinelearning.csv.BookDataReaderAndPreferenceConverter;
-import net.predictblty.machinelearning.csv.IrisPlantDataReader;
-import net.predictblty.machinelearning.csv.PreferenceDataReader;
 import net.predictblty.machinelearning.mlalgorithm.MLAlgorithm;
 import net.predictblty.machinelearning.mlcommon.Classification;
 import net.predictblty.machinelearning.mlcommon.FeatureComparators;
 import net.predictblty.machinelearning.mlcommon.HelpfulMethods;
-import net.predictblty.machinelearning.model.IrisPlant;
 import net.predictblty.machinelearning.model.Preference;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.InputStream;
 import java.util.*;
 
-import static org.junit.Assert.*;
-
-public class UserBasedCollaborativeFilteringRecommandationAlgorithmTest {
+public class UserBasedCollaborativeFilteringRecommendationAlgorithmTest {
     @Test
     public void shouldPassWhenSuccessIsHigh() throws Exception {
         Hazelcast.shutdownAll();
@@ -32,7 +26,7 @@ public class UserBasedCollaborativeFilteringRecommandationAlgorithmTest {
         try {
             //Read data
             BookDataReaderAndPreferenceConverter preferenceDataReader = new BookDataReaderAndPreferenceConverter();
-            InputStream is = UserBasedCollaborativeFilteringRecommandationAlgorithmTest.class.getClassLoader().getResourceAsStream("BX-Book-Ratings.csv");//TODO: add user data
+            InputStream is = UserBasedCollaborativeFilteringRecommendationAlgorithmTest.class.getClassLoader().getResourceAsStream("BX-Book-Ratings.csv");//TODO: add user data
             List<Preference> preferenceList = preferenceDataReader.read(is);
 
             //Prepare training data and prediction data
@@ -55,7 +49,7 @@ public class UserBasedCollaborativeFilteringRecommandationAlgorithmTest {
 
             Map<String, Object> options = new HashMap<String, Object>();
             options.put("comparator", new FeatureComparators.DoubleManhattanDistanceFeatureComparator());
-            MLAlgorithm algorithm = new UserBasedCollaborativeFilteringRecommandationAlgorithm(hazelcastInstance, options);
+            MLAlgorithm algorithm = new UserBasedCollaborativeFilteringRecommendationAlgorithm(hazelcastInstance, options);
             algorithm.train(trainData);
 
             int success = 0;
@@ -98,7 +92,7 @@ public class UserBasedCollaborativeFilteringRecommandationAlgorithmTest {
 
             Map<String, Object> options = new HashMap<String, Object>();
             options.put("comparator", new FeatureComparators.DoubleManhattanDistanceFeatureComparator());
-            MLAlgorithm algorithm = new UserBasedCollaborativeFilteringRecommandationAlgorithm(hazelcastInstance, options);
+            MLAlgorithm algorithm = new UserBasedCollaborativeFilteringRecommendationAlgorithm(hazelcastInstance, options);
             Collection<Preference> trainData = new LinkedList<Preference>();
             trainData.add(new Preference("A","B", 1.0));
             trainData.add(new Preference("A","C", 1.0));
