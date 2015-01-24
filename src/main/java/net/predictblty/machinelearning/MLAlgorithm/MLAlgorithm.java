@@ -16,6 +16,7 @@ public abstract class MLAlgorithm implements HazelcastInstanceAware {
     protected transient HazelcastInstance hazelcastInstance;
     private Long dataId;
     protected Map<String, Object> options;
+    protected String prefix;
 
     public MLAlgorithm() {
     }
@@ -73,5 +74,19 @@ public abstract class MLAlgorithm implements HazelcastInstanceAware {
     //set Options does not work well after initilization so don't use it
     public void setOptions(Map<String, Object> options) {
         this.options = options;
+    }
+
+    public String getPrefix() {
+        if (prefix == null) {
+            prefix = "";
+        }
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        if (prefix == null) {
+            prefix = "";
+        }
+        this.prefix = prefix;
     }
 }

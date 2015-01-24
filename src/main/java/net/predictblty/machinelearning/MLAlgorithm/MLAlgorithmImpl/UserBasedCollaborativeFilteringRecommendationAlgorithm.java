@@ -75,7 +75,7 @@ public class UserBasedCollaborativeFilteringRecommendationAlgorithm extends MLAl
 
     public IMap<ByteHolder, ClassifiedFeature> getTrainingdata() {
         if (trainingdata == null) {
-            this.trainingdata = hazelcastInstance.getMap("traindata-" + this.getDataId());
+            this.trainingdata = hazelcastInstance.getMap(this.getPrefix()+"-traindata-" + this.getDataId());
         }
         return trainingdata;
     }

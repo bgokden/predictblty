@@ -78,7 +78,7 @@ public class DistanceBasedClassificationAlgorithm extends MLAlgorithm {
 
     public IMap<Map<String, Serializable>, Classification> getTrainingdata() {
         if (trainingdata == null) {
-            this.trainingdata = hazelcastInstance.getMap("traindata-" + this.getDataId());
+            this.trainingdata = hazelcastInstance.getMap(this.getPrefix() +"-traindata-" + this.getDataId());
         }
         return trainingdata;
     }
